@@ -1,0 +1,9 @@
+/node_modules
+/activity.db
+/events.db
+/members.db
+/messages.db
+/projects.db
+/roles.db
+/tasks.db
+/teams.db

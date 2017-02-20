@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orga | Build Your Organization</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/set1.css" />
+    <link rel="stylesheet" type="text/css" href="public/styles/set2.css" />
+    <link rel="stylesheet" href="public/styles/animate.css">
+    <link rel="stylesheet" href="public/styles/Orga.css">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/c6d1d818c9.js"></script>
+</head>
+<body>
+    <script>
+        var imports = {
+            'cards':[
+                'Activity.js','EventCard.js','MessageCard.js','Navi.js',
+                'ProfileStatsCard.js','ProjectCard.js','RoleCard.js',
+                'TeamCard.js'
+            ],
+            'details':[
+                'EventDetail.js','MessageDetail.js','ProjectDetail.js',
+                'RoleDetail.js','TaskDetail.js','TeamDetail.js'
+            ],
+            'panels':[
+                {'Toolbar':['Toolbar.js','Tools.js'],
+                 'Home':['Facade.js','Home.js','Utility.js']
+                },
+                [
+                    'Activity.js','Login.js','Messages.js','Profile.js',
+                    'Projects.js','Roles.js','Tasks.js','Teams.js','Events.js',
+                    'Members.js'
+                ]
+            ]
+        };
+
+        iteratePaths(imports.cards,'cards/');
+        iteratePaths(imports.details,'details/');
+        iteratePaths(imports.panels[0].Toolbar,'panels/Toolbar/');
+        iteratePaths(imports.panels[0].Home,'panels/Home/');
+        iteratePaths(imports.panels[1],'panels/');
+
+        $('body').append(new Home().assemble());
+
+        function iteratePaths(collection,parentPath){
+            $.each(collection,function(){
+                importScript(parentPath+this);
+            });
+        }
+
+        function importScript(path){
+            $.ajax({
+                async: false,
+                url: 'public/'+path,
+                dataType: "script"
+            });
+        }
+
+    </script>
+</body>
+</html>
