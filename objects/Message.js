@@ -31,6 +31,11 @@ router.post('/add',function(request,response){
     console.log(newDoc);
     response.send({message:"New message added!",data:newDoc});
   });
+
+  //Special feature coming soon ;)
+  // var a = new Activity(request.body.activity);
+  // Activities.insert(a,function(err,newDoc){});
+
 });
 
 router.post('/update',function(request,response){

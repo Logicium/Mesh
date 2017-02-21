@@ -39,7 +39,7 @@ ToolCard.prototype = {
     $('.activityPanel').append( $( this.routeClick(name,inputs) ) );
   },
   routeClick:function(name,inputs){
-      var formInputs = getAllValues();
+      var formInputs = getAllValues('.toolPanel');
       console.log(formInputs);
       $('.toolPanel').remove();
       if(name=="Search"){return new Search().assemble();}
@@ -66,11 +66,11 @@ function getAllValues(element){
         var type = $(this).attr("type");
         datum = {};
         if ((type == "checkbox" || type == "radio") && this.checked) {
-            datum[$(this).attr('placeholder')] = $(this).val();
+            datum[$(this).next('label').find('span').text()] = $(this).val();
             inputValues.push(JSON.parse(JSON.stringify(datum)));
         }
         else if (type != "button" || type != "submit") {
-            datum[$(this).attr('placeholder')] = $(this).val();
+            datum[$(this).next('label').find('span').text()] = $(this).val();
             inputValues.push(JSON.parse(JSON.stringify(datum)));
         }
     });

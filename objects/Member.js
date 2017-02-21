@@ -37,11 +37,11 @@ router.post('/delete',function(request,response){
 });
 
 router.post('/add',function(request,response){
-    console.log("Add user request: ");
+    console.log("Add member request: ");
     console.log(request.body);
     Members.insert(request.body, function (err, newDoc) {
         console.log(newDoc);
-        response.send({message:"New user added",user:newDoc});
+        response.send({message:"New member added",data:newDoc});
     });
 });
 

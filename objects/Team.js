@@ -6,7 +6,12 @@ router.get('/',function(request,response){
 });
 
 router.post('/add',function(request,response){
-    //Create new
+  console.log("Add team request: ");
+  console.log(request.body);
+  Teams.insert(request.body, function (err, newDoc) {
+    console.log(newDoc);
+    response.send({message:"New team added",data:newDoc});
+  });
 });
 
 router.post('/update',function(request,response){
