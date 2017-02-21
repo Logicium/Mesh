@@ -28,14 +28,17 @@ var Task = require('./objects/Task.js');
 var Team = require('./objects/Team.js');
 var Project = require('./objects/Project.js');
 var Role = require('./objects/Role.js');
+var Profile= require('./objects/Profile.js');
 
 app.use('/members',Member);
-app.use('/activities',Activity);
+app.use('/activity',Activity);
 app.use('/events',Event);
 app.use('/messages',Message);
 app.use('/teams',Team);
+app.use('/tasks',Task);
 app.use('/projects',Project);
 app.use('/roles',Role);
+//app.use('/profile',Profile)
 
 var server = app.listen(2101, function () {
     var port = server.address().port;

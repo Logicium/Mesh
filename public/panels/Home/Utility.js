@@ -7,6 +7,7 @@ var UtilityPanel = function(options){
     this.westNavi = $('<div>').addClass('westNavi col-xs-2');
     this.eastNavi = $('<div>').addClass('eastNavi col-xs-2');
     this.toolBar = new ToolBar(options.tools).assemble();
+    this.cardPanel = new CardPanel(options.name).assemble();
     console.log("Util panel.");
     this.setProperties();
     this.applyBanner();
@@ -38,7 +39,8 @@ UtilityPanel.prototype={
             this.westNavi,
             this.activityPanel.append(
               this.northNavi,
-              this.toolBar
+              this.toolBar,
+              this.cardPanel
             ),
             this.eastNavi
         );

@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/',function(request,response){
-    //List all from Database
+  //List all from Database
+  console.log("Download all Teams request.");
+  Teams.find({}, function (err, docs) {
+    response.send(docs);
+  });
 });
 
 router.post('/add',function(request,response){

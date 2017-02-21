@@ -19,8 +19,9 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/',function(request,response){
-    response.send({data:Messages.all});
-    //List all from Database
+  Messages.find({}, function (err, docs) {
+    response.send(docs);
+  });
 });
 
 router.post('/add',function(request,response){
