@@ -39,10 +39,12 @@ ToolCard.prototype = {
     $('.activityPanel').append( $( this.routeClick(name,inputs) ) );
   },
   routeClick:function(name,inputs){
+      var formInputs = getAllValues();
+      console.log(formInputs);
       $('.toolPanel').remove();
       if(name=="Search"){return new Search().assemble();}
       else if(name=="Add"||name=="New"){return new InputForm(inputs).assemble()}
-      else if(name=="Send"){return new Send().assemble()}
+      else if(name=="Send"){return new Send().assemble(formInputs)}
       else if(name=="Delete"){return new Delete().assemble()}
       else if(name=="Edit"){return new Edit().assemble()}
       else if(name=="Back"){return new Back().assemble()}
@@ -56,6 +58,25 @@ ToolBar.prototype = {
     return $(this.toolBar);
   }
 }
+
+function getAllValues(element){
+    var inputValues = [];
+    var datum = {};
+    $(element).find('input').each(function () {
+        var type = $(this).attr("type");
+        datum = {};
+        if ((type == "checkbox" || type == "radio") && this.checked) {
+            datum[$(this).attr('placeholder')] = $(this).val();
+            inputValues.push(JSON.parse(JSON.stringify(datum)));
+        }
+        else if (type != "button" || type != "submit") {
+            datum[$(this).attr('placeholder')] = $(this).val();
+            inputValues.push(JSON.parse(JSON.stringify(datum)));
+        }
+    });
+    return inputValues;
+}
+
 
 var ToolPanel = function(name,options){
 

@@ -36,7 +36,7 @@ Navi.prototype={
 
 var UtilitySelectionCard = function(data){
     this.utilitySelectionCard = $('<div>').addClass('utilitySelectionCard button button--wapasha');
-    self = this
+    self = this;
     this.utilitySelectionCard.click(function(){return self.clicked(this)});
     this.iconBox = $('<span>').addClass('iconBox col-xs-5').prepend($('<i>').addClass('fa fa-'+data.icon));
     this.nameBox = $('<span>').addClass('nameBox col-xs-7').text(data.name);
@@ -61,11 +61,6 @@ UtilitySelectionCard.prototype = {
         else if(name=="Tasks"){return new Tasks().assemble()}
         else if(name=="Teams"){return new Teams().assemble()}
         else if(name=="Profile"){return new Profile().assemble()}
-    },
-
-    glow:function(){
-        //write/find specific CSS to accomplish this task.
-        //this.utilitySelectionCard.glow();
     },
 
     assemble:function(){

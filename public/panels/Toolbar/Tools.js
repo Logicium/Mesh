@@ -50,6 +50,9 @@ var InputForm = function(inputs){
       )
     );
   });
+  $.each($('.toolCard'),function(){if($(this).find('.toolName').text() == "Send"){$(this).remove()}});
+  $('.toolBar').append(new ToolCard("Send",'arrow-right').assemble());
+
 };
 InputForm.prototype = {
     assemble: function () {
@@ -58,16 +61,21 @@ InputForm.prototype = {
 };
 
 var Send = function(){
-    this.sendPanel = $('<div>').addClass('toolPanel');
-    this.inputPanel.css('height','100%').css('width','100%');
-    this.inputPanel.css('background','rgba(246, 246, 246, 0.31)');
-    this.inputForm = $('<div>').addClass("sendMessage");
-
+    this.sendPanel = $('<div>').addClass('toolPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+    this.sendPanel.css('height','100%').css('width','100%');
+    this.sendPanel.css('background','rgba(246, 246, 246, 0.31)');
 };
 
 Send.prototype = {
-    assemble: function(){
-        return $(this.sendPanel);
+    assemble: function(formInputs){
+      var routeBase = $('.topTitle').text().replace(/ /g,'').toLowerCase();
+      var self = this;
+      self.sendMessage = $('<div>').addClass("sendPanel").text("Message sent!");
+      $.post('http://localhost:2101/'+routeBase+'/add',{inputs:formInputs},function(data){
+        console.log(data);
+        $('.sendPanel').text(data.message);
+      });
+      return $(self.sendPanel).append(self.sendMessage);
     }
 };
 

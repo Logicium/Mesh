@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var LinvoDB = require("linvodb3");
+LinvoDB.dbPath = process.cwd();
+var Members = new LinvoDB("members", {});
 
 var Member = function(DataModel){
     this.firstName = DataModel['firstName'];
@@ -36,7 +39,7 @@ router.post('/delete',function(request,response){
 router.post('/add',function(request,response){
     console.log("Add user request: ");
     console.log(request.body);
-    Users.insert(request.body, function (err, newDoc) {
+    Members.insert(request.body, function (err, newDoc) {
         console.log(newDoc);
         response.send({message:"New user added",user:newDoc});
     });
@@ -59,8 +62,8 @@ router.post('/update',function(request,response){
 
 router.get('/findOneObject',function(request,response){
     console.log("Finding one user complete: "+response._id);
-    Users.find({'_id':response._id}, function (err, docs) {
-        response.send(new User(docs));
+  Members.find({'_id':response._id}, function (err, docs) {
+        response.send(new Members(docs));
     });
 });
 

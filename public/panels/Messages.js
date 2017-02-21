@@ -12,7 +12,7 @@ Messages.prototype={
           'To','From','Message','Media'
         ]}
       ]
-    }
+    };
     return new UtilityPanel(options).utilityPanel;
   },
 };

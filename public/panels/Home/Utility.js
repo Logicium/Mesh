@@ -22,7 +22,7 @@ UtilityPanel.prototype={
         this.utilityPanel.append(bgImage);
         this.westNavi.css('height','100%').css('padding','0').css('min-width','150px');
         this.westNavi.append(new Navi().naviPanel);
-        this.centeredText = $('<div>').css('padding-top','75px').addClass('centeredText text-center').text(this.options.name).css('font-family','Oswald').css('font-weight','300');
+        this.centeredText = $('<div>').css('padding-top','75px').addClass('centeredText topTitle text-center').text(this.options.name).css('font-family','Oswald').css('font-weight','300');
         this.northNavi.append(this.centeredText);
         this.northNavi.css('width','100%').css('height','200px').css('padding-left','0').css('padding-right','0');
         this.eastNavi.css('height','100vh').css('padding','0');
