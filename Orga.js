@@ -38,7 +38,7 @@ app.use('/teams',Team);
 app.use('/tasks',Task);
 app.use('/projects',Project);
 app.use('/roles',Role);
-//app.use('/profile',Profile)
+app.use('/profile',Profile);
 
 var server = app.listen(2101, function () {
     var port = server.address().port;

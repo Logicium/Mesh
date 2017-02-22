@@ -1,3 +1,5 @@
+var express = require('express');
+var router = express.Router();
 var LinvoDB = require("linvodb3");
 LinvoDB.dbPath = process.cwd();
 var Messages = new LinvoDB("messages",{});
@@ -13,10 +15,6 @@ var Message = function(){
 Message.prototype={
 
 };
-
-
-var express = require('express');
-var router = express.Router();
 
 router.get('/',function(request,response){
   Messages.find({}, function (err, docs) {
