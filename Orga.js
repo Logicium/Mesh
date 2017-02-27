@@ -31,7 +31,7 @@ var Role = require('./objects/Role.js');
 var Profile= require('./objects/Profile.js');
 
 app.use('/members',Member);
-app.use('/activity',Activity);
+app.use('/activity',Activity.r);
 app.use('/events',Event);
 app.use('/messages',Message);
 app.use('/teams',Team);

@@ -5,7 +5,9 @@ LinvoDB.dbPath = process.cwd();
 var Activities = new LinvoDB("activities", {});
 
 router.get('/',function(request,response){
-    //List all from Database
+  Activities.find({}, function (err, docs) {
+    response.send(docs);
+  });
 
 });
 
@@ -13,6 +15,6 @@ router.post('/add',function(request,response){
     //Create new activity
 });
 
-module.exports = router;
+module.exports = {r:router,database:Activities};
 
 

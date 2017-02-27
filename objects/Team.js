@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var LinvoDB = require("linvodb3");
 LinvoDB.dbPath = process.cwd();
-var Teams = "";//new LinvoDB("teams", {});
+var Teams = new LinvoDB("teams", {});
 
 router.get('/',function(request,response){
   //List all from Database
