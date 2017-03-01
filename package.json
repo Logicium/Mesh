@@ -1,0 +1,19 @@
+{
+  "name": "orga",
+  "version": "1.0.0",
+  "description": "A organization building app that puts all the tools you need to automate your organization, assign responsibility, and cross communicate.",
+  "main": "Orga.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Logicium/Orga.git"
+  },
+  "author": "Kisora Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Logicium/Orga/issues"
+  },
+  "homepage": "https://github.com/Logicium/Orga#readme"
+}
