@@ -4,7 +4,7 @@
   "description": "A organization building app that puts all the tools you need to automate your organization, assign responsibility, and cross communicate.",
   "main": "Orga.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"Orga.js","test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
