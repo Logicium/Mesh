@@ -1,5 +1,5 @@
-/node_modules
-/activity.db
+/.idea
+/activities.db
 /events.db
 /members.db
 /messages.db
@@ -7,3 +7,6 @@
 /roles.db
 /tasks.db
 /teams.db
+/settings.db
+/profiles.db
+/users.db

@@ -75,7 +75,7 @@ var EventCard = function(data){
   $.each(data.guests,function(){self.guestsView.append($('<span>').text(this))});
   this.infoPanel = $('<div>').addClass('row text-center').append(
     $('<div>').addClass('col-xs-6 text-center').append(
-      $('<i>').addClas('fa fa-clock-o'),
+      $('<i>').addClass('fa fa-clock-o'),
       $('<div>').text(data.startTime),
       $('<div>').text(data.endTime)
     ),
@@ -128,5 +128,3 @@ ProjectCard.prototype = {
     return this.card;
   }
 };
-
-
