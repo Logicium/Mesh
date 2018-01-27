@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var LinvoDB = require("linvodb3");
-LinvoDB.dbPath = process.cwd();
-var Profile = new LinvoDB("profile", {});
+var Profile = require('./../server/Databases').Profiles;
 
 router.get('/',function(request,response){
   //List all from Database

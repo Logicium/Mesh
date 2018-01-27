@@ -1,7 +1,7 @@
 var Navi = function(){
-    this.naviPanel = $('<div>').addClass('naviPanel col-xs-2');
+    this.naviPanel = $('<div>').addClass('naviPanel');
     this.homeBox = $('<div>').addClass('homeBox');
-    this.utilitiesSelection = $('<div>').addClass('utilitiesSelection');
+    this.utilitiesSelection = $('<div>').addClass('utilitiesSelection').width('100%');
     this.utilitiesList = [
         {name:'Activity',icon:'rss'},
         {name:'Messages',icon:'comments-o'},
@@ -35,12 +35,13 @@ Navi.prototype={
 };
 
 var UtilitySelectionCard = function(data){
-    this.utilitySelectionCard = $('<div>').addClass('utilitySelectionCard button button--wapasha');
+    this.utilitySelectionCard = $('<div>').addClass('utilitySelectionCard').css('width','100%').hover(
+        function(){$(this).animate({'background-color':transparentBlack(),'color':'white'},300);},
+        function(){$(this).animate({'background-color':transparent(),'color':'black'},300)}
+    );
     self = this;
     this.utilitySelectionCard.click(function(){return self.clicked(this)});
-    this.iconBox = $('<span>').addClass('iconBox col-xs-5').prepend($('<i>').addClass('fa fa-'+data.icon));
-    this.nameBox = $('<span>').addClass('nameBox col-xs-7').text(data.name);
-    //this.glow(); //Not yet implemented
+    this.nameBox = row().append( buttonCol(data.name,12 ).addClass('nameBox').prepend($('<i>').addClass('fa fa-'+data.icon)) )
     this.assemble();
 };
 
@@ -65,7 +66,6 @@ UtilitySelectionCard.prototype = {
 
     assemble:function(){
         this.utilitySelectionCard.append(
-            this.iconBox,
             this.nameBox
         );
     }

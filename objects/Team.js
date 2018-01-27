@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var LinvoDB = require("linvodb3");
-LinvoDB.dbPath = process.cwd();
-var Teams = new LinvoDB("teams", {});
+var Teams = require('./../server/Databases').Teams;
 
 router.get('/',function(request,response){
   //List all from Database
@@ -15,7 +13,7 @@ router.get('/',function(request,response){
 router.post('/add',function(request,response){
   console.log("Add team request: ");
   console.log(request.body);
-  Teams.insert(request.body, function (err, newDoc) {
+  Tasks.insert(request.body, function (err, newDoc) {
     console.log(newDoc);
     response.send({message:"New team added",data:newDoc});
   });

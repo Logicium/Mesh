@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var LinvoDB = require("linvodb3");
-LinvoDB.dbPath = process.cwd();
-var Members = new LinvoDB("members", {});
-var Activity = require('./objects/Activity.js').database;
+var Members = require('./../server/Databases').Members;
+var Activity = require('./../server/Databases.js').Activities;
 
 var Member = function(DataModel){
     this.firstName = DataModel['firstName'];

@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var LinvoDB = require("linvodb3");
-LinvoDB.dbPath = process.cwd();
-var Messages = new LinvoDB("messages",{});
+var Messages =  require('./../server/Databases').Messages;
 
 var Message = function(){
     this.members = [];

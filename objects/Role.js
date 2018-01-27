@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var LinvoDB = require("linvodb3");
-LinvoDB.dbPath = process.cwd();
-var Roles = new LinvoDB("roles", {});
+var Roles =  require('./../server/Databases').Roles;
 
 var Role = function(){
 
