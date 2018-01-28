@@ -41,7 +41,7 @@ router.post('/add',function(request,response){
     Members.insert(request.body, function (err, newDoc) {
         console.log(newDoc);
         response.send({message:"New member added",data:newDoc});
-        Activity.insert({message:newDoc.inputs.fullName+"was added",type:'memberAdd'}, function (err, newDoc) {
+        Activity.insert({message:newDoc.inputs.fullName+" was added",type:'memberAdd'}, function (err, newDoc) {
           console.log(newDoc);
         });
     });

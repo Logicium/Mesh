@@ -39,7 +39,7 @@ var UtilitySelectionCard = function(data){
         function(){$(this).animate({'background-color':transparentBlack(),'color':'white'},300);},
         function(){$(this).animate({'background-color':transparent(),'color':'black'},300)}
     );
-    self = this;
+    var self = this;
     this.utilitySelectionCard.click(function(){return self.clicked(this)});
     this.nameBox = row().append( buttonCol(data.name,12 ).addClass('nameBox').prepend($('<i>').addClass('fa fa-'+data.icon)) )
     this.assemble();

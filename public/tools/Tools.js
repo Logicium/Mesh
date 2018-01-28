@@ -20,7 +20,7 @@ var linkedData = {
     Multi:  {keys:['to','assignees'],data:function(){return [{value:'group 1',label:'Group 1',icon:'public/images/img1.jpg'}]}},
 }
 
-var InputForm = function(inputs){
+var InputForm = function(inputs,toolData){
   this.inputPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
   this.inputPanel.css('height','100%').css('width','100%');
   this.inputPanel.css('background','rgba(246, 246, 246, 0.31)');
@@ -157,12 +157,12 @@ var InputForm = function(inputs){
               );
           }
       });
-
-
-
   });
+  console.log(toolData);
+  toolData.push({name:"Send",icon:'arrow-right'});
+  console.log(toolData);
   $.each($('.toolCard'),function(){if($(this).find('.toolName').text() == "Send"){$(this).remove()}});
-  $('.toolBar').append(new ToolCard("Send",'arrow-right').assemble());
+  $('.toolBar').replaceWith(new ToolBar(toolData).assemble());
 
 };
 InputForm.prototype = {
