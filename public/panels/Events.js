@@ -10,7 +10,7 @@ Events.prototype={
       tools: [
         {name: "Search",icon:'search'},
         {name: "New",icon:'plus',inputs:[
-          'Name','Guests','Description','Location','Date'
+          'Name','Hosts','Guests','Description','Location','Start Time','End Time','Image'
         ]}
       ]
     }

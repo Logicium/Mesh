@@ -1,15 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var Roles =  require('./../server/Databases').Roles;
+var Activities = require('./../server/Databases.js').Activities;
 
-var Role = function(){
-
+var Role = function(dataModel){
+    this.name = dataModel[0];
+    this.hashtags = dataModel[1];
+    this.description = dataModel[2];
+    this.image = dataModel[3];
+    this.members = [dataModel[4]]
+    this.messages = [];
 };
-
-Role.prototype={
-
-};
-
 
 router.get('/',function(request,response){
   //List all from Dat   abase
@@ -22,9 +23,13 @@ router.get('/',function(request,response){
 router.post('/add',function(request,response){
   console.log("Add project request: ");
   console.log(request.body);
-  Roles.insert(request.body, function (err, newDoc) {
+  var r = new Role(request.body.inputs);
+  Roles.insert(r, function (err, newDoc) {
     console.log(newDoc);
-    response.send({message:"New project added",data:newDoc});
+    Activities.insert({message:newDoc.name+" was added",type:'roleAdd',link: newDoc._id}, function (err, newDoc) {
+      console.log(newDoc);
+    });
+    response.send({message:"New role added",data:newDoc});
   });
 });
 

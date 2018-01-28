@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Tasks =  require('./../server/Databases').Tasks;
+var Activities = require('./../server/Databases.js').Activities;
+
+var Task = function(dataModel){
+    this.name = dataModel[0]
+}
 
 router.get('/',function(request,response){
   //List all from Database
@@ -13,8 +18,12 @@ router.get('/',function(request,response){
 router.post('/add',function(request,response){
   console.log("Add task request: ");
   console.log(request.body);
-  Tasks.insert(request.body, function (err, newDoc) {
+  var t = new Task(request.body.inputs);
+  Tasks.insert(t, function (err, newDoc) {
     console.log(newDoc);
+    Activities.insert({message:newDoc.name+" was added",type:'taskAdd',link: newDoc._id}, function (err, newDoc) {
+      console.log(newDoc);
+    });
     response.send({message:"New task added",data:newDoc});
   });
 });

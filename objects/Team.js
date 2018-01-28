@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Teams = require('./../server/Databases').Teams;
+var Activities = require('./../server/Databases.js').Activities;
+
+var Team = function(dataModel){
+    this.name = dataModel[0];
+}
 
 router.get('/',function(request,response){
   //List all from Database
@@ -13,8 +18,12 @@ router.get('/',function(request,response){
 router.post('/add',function(request,response){
   console.log("Add team request: ");
   console.log(request.body);
-  Tasks.insert(request.body, function (err, newDoc) {
+  var t = new Team(request.body.inputs);
+  Teams.insert(t, function (err, newDoc) {
     console.log(newDoc);
+    Activities.insert({message:newDoc.name+" was added",type:'teamAdd',link: newDoc._id}, function (err, newDoc) {
+      console.log(newDoc);
+    });
     response.send({message:"New team added",data:newDoc});
   });
 });

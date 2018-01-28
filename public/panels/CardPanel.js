@@ -1,5 +1,5 @@
 var CardPanel = function(name){
-  this.cardPanel = $('<div>').addClass('cardPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+  this.cardPanel = div().addClass('cardPanel col-xs-8 text-center animated fadeInUp').css('padding','0').css('margin-top','15px');
   this.cardPanel.css('height','100%').css('width','100%');
   this.cards = $('<div>').addClass('cards text-center');
   this.cardPanel.append(this.cards);

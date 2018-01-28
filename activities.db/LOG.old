@@ -1,3 +1,6 @@
-2018/01/27-21:23:00.282 29fc Recovering log #27
-2018/01/27-21:23:00.373 29fc Delete type=0 #27
-2018/01/27-21:23:00.374 29fc Delete type=3 #26
+2018/01/28-15:58:33.292 4f2c Recovering log #42
+2018/01/28-15:58:33.293 4f2c Level-0 table #44: started
+2018/01/28-15:58:33.392 4f2c Level-0 table #44: 255 bytes OK
+2018/01/28-15:58:33.485 4f2c Delete type=0 #42
+2018/01/28-15:58:33.486 4f2c Delete type=3 #40
+2018/01/28-15:58:33.531 3dc8 Moved #35 to level-1 251 bytes OK: files[ 3 2 0 0 0 0 0 ]

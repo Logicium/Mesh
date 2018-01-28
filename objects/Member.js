@@ -1,26 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var Members = require('./../server/Databases').Members;
-var Activity = require('./../server/Databases.js').Activities;
+var Activities = require('./../server/Databases.js').Activities;
 
 var Member = function(DataModel){
-    this.firstName = DataModel['firstName'];
-    this.lastName = DataModel['lastName'];
+    this.firstName = DataModel[0];
+    this.lastName = DataModel[1];
     this.fullName = this.firstName + ' ' + this.lastName;
-    this.twitter = DataModel['twitter'];
-    this.facebook = DataModel['facebook'];
-    this.website = DataModel['website'];
-
-    this.roles = [];
-    this.projects = [];
+    this.email = DataModel[2];
+    this.password = DataModel[3]
+    this.image = DataModel[4];
+    this.roles = [DataModel[5]];
+    this.teams = [DataModel[6]];
+    this.projects = [DataModel[7]];
     this.activity = [];
-    this.teams = [];
     this.messages = [];
     this.events = [];
-};
-
-Member.prototype = {
-
 };
 
 router.get('/',function(request,response){
@@ -38,10 +33,11 @@ router.post('/delete',function(request,response){
 router.post('/add',function(request,response){
     console.log("Add member request: ");
     console.log(request.body);
-    Members.insert(request.body, function (err, newDoc) {
+    var m = new Member(request.body.inputs);
+    Members.insert(m, function (err, newDoc) {
         console.log(newDoc);
         response.send({message:"New member added",data:newDoc});
-        Activity.insert({message:newDoc.inputs.fullName+" was added",type:'memberAdd'}, function (err, newDoc) {
+        Activities.insert({message:newDoc.fullName+" was added",type:'memberAdd',link: newDoc._id}, function (err, newDoc) {
           console.log(newDoc);
         });
     });

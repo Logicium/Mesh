@@ -4,7 +4,7 @@ var Members = function(){
     tools: [
       {name: "Search",icon:'search'},
       {name: "Add",icon:'plus',inputs:[
-        'First Name','Last Name','Email','Image','Roles','Teams','Projects'
+        'First Name','Last Name','Email','Password','Image','Roles','Teams','Projects'
       ]}
     ]
   }

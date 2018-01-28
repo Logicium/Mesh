@@ -11,7 +11,7 @@ Projects.prototype={
       tools: [
         {name: "Search",icon:'search'},
         {name: "New",icon:'plus',inputs:[
-          'Name','Description','Invitees'
+          'Name','Description','Members'
         ]}
       ]
     }
