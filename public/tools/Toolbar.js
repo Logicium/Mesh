@@ -8,11 +8,11 @@ var ToolBar = function(contextTools){
 
   this.toolBar = $('<div>').addClass('toolBar text-center col-xs-8').css('width','100%');
   self = this;
-  console.log(contextTools);
+  //console.log(contextTools);
 
   $.each(contextTools,function(data){
       data = this;
-      console.log(self);
+      //console.log(self);
       var size = 12;
       if(contextTools.length==1){size=12}
       else if(contextTools.length==2){size=6}

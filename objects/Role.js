@@ -4,12 +4,14 @@ var Roles =  require('./../server/Databases').Roles;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Role = function(dataModel){
-    this.name = dataModel[0];
+    this.name = dataModel[0]+'';
     this.hashtags = dataModel[1];
     this.description = dataModel[2];
     this.image = dataModel[3];
     this.members = [dataModel[4]]
     this.messages = [];
+    this.label = this.name.toLowerCase();
+    this.icon = this.image  || 'public/images/demo/role.jpg';
 };
 
 router.get('/',function(request,response){

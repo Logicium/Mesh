@@ -16,6 +16,8 @@ var Member = function(DataModel){
     this.activity = [];
     this.messages = [];
     this.events = [];
+    this.label = this.fullName;
+    this.icon = this.image;
 };
 
 router.get('/',function(request,response){

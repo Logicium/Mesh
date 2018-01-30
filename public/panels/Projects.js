@@ -1,8 +1,4 @@
-var Projects = function(){
-
-
-
-};
+var Projects = function(){};
 
 Projects.prototype={
   assemble: function(){
@@ -11,7 +7,7 @@ Projects.prototype={
       tools: [
         {name: "Search",icon:'search'},
         {name: "New",icon:'plus',inputs:[
-          'Name','Description','Members'
+          'Name','Description','Image','Members','Roles'
         ]}
       ]
     }

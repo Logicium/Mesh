@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Messages =  require('./../server/Databases').Messages;
 
-var Message = function(){
+var Message = function(dataModel){
     this.members = [];
     this.teams = [];
     this.users = [];

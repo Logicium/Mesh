@@ -11,7 +11,7 @@ Teams.prototype={
       tools: [
         {name: "Search",icon:'search'},
         {name: "New",icon:'plus',inputs:[
-          'Name','Description','Members','Projects'
+          'Name','Description','Image','Members','Projects'
         ]},
       ]
     }

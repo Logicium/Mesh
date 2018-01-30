@@ -1,6 +1,6 @@
 var Search = function(){
   this.searchPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
-  this.searchPanel.height('125').css('width','100%');
+  this.searchPanel.height('125').css('width','calc(100% - 15px)').css('margin-left','15px');
   this.searchPanel.css('background','rgba(246, 246, 246, 0.31)');
   this.searchForm = $('<div>').addClass("searchForm");
   this.searchPanel.append(input('Find'));
@@ -11,18 +11,26 @@ Search.prototype = {
   }
 };
 
-var linkedData = {
-    Members: {keys:['members','invitees','guests'],data:function(){return [{value:'kt',label:'KT',icon:'public/images/img1.jpg'}]}},
-    Teams:  {keys:['teams'],data:function(){return [{value:'team a',label:'Team A',icon:'public/images/img1.jpg'}]}},
-    Projects:  {keys:['projects'],data:function(){return [{value:'project x',label:'Project X',icon:'public/images/img1.jpg'}]}},
-    Roles:  {keys:['roles'],data:function(){return [{value:'leader',label:'Leader',icon:'public/images/img1.jpg'}]}},
-    Events:  {keys:['events'],data:function(){return [{value:'event zero',label:'Event Zero',icon:'public/images/img1.jpg'}]}},
-    Multi:  {keys:['to','assignees'],data:function(){return [{value:'group 1',label:'Group 1',icon:'public/images/img1.jpg'}]}},
+var LinkedData = function(){
+    var self = this;
+    this.Members = {keys:['members','invitees','guests'],data:[]};
+    syncJSON('/members',function(data){console.log(data);self.Members.data = data});
+    this.Teams =  {keys:['teams'],data:[]};
+    syncJSON('/teams',function(data){console.log(data);self.Teams.data = data});
+    this.Projects =  {keys:['projects'],data:[]};
+    syncJSON('/projects',function(data){console.log(data);self.Projects.data = data});
+    this.Roles =  {keys:['roles'],data:[]};
+    syncJSON('/roles',function(data){console.log(data);self.Roles.data = data});
+    this.Events =  {keys:['events'],data:[]};
+    syncJSON('/events',function(data){console.log(data);self.Events.data = data});
+    this.Multi = {keys:['to','assignees'],data:[]};
+    syncJSON('/members',function(data){console.log(data);self.Multi.data = data});
 }
 
 var InputForm = function(inputs,toolData){
-  this.inputPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
-  this.inputPanel.css('height','100%').css('width','100%');
+  var linkedData = new LinkedData();
+  this.inputPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('width','calc(100% - 15px)').css('margin-left','15px').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+  this.inputPanel.css('height','100%');
   this.inputPanel.css('background','rgba(246, 246, 246, 0.31)');
   this.inputForm = $('<div>').addClass("inputForm");
   var self2 = this;
@@ -33,7 +41,7 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Members.data(),
+                  source:linkedData.Members.data,
                   minLength: 0,
                   select: function (event, ui) {
                       $("#search").val(ui.item.label);
@@ -56,7 +64,7 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Teams.data(),
+                  source:linkedData.Teams.data,
                   minLength: 0,
                   select: function (event, ui) {
                       $("#search").val(ui.item.label);
@@ -77,7 +85,7 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Projects.data(),
+                  source:linkedData.Projects.data,
                   minLength: 0,
                   select: function (event, ui) {
                       $("#search").val(ui.item.label);
@@ -98,7 +106,7 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Roles.data(),
+                  source:linkedData.Roles.data,
                   minLength: 0,
                   select: function (event, ui) {
                       $("#search").val(ui.item.label);
@@ -119,7 +127,7 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Events.data(),
+                  source:linkedData.Events.data,
                   minLength: 0,
                   select: function (event, ui) {
                       $("#search").val(ui.item.label);
@@ -140,10 +148,11 @@ var InputForm = function(inputs,toolData){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Multi.data(),
+                  source:linkedData.Multi.data,
                   minLength: 0,
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      $(newInput).val(ui.item.label);
                       return false;
                   }
               });
@@ -181,7 +190,7 @@ var autocompleteCard = function(body,item){
 
 var Send = function(){
     this.sendPanel = $('<div>').addClass('toolPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
-    this.sendPanel.css('height','100%').css('width','100%');
+    this.sendPanel.css('height','100%').css('width','calc(100% - 15px)').css('margin-left','15px');
     this.sendPanel.css('background','rgba(246, 246, 246, 0.31)');
 };
 

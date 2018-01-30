@@ -17,7 +17,7 @@ Home.prototype = {
 
         if(sessionStorage.getItem('loginToken')===null){
           console.log(sessionStorage.getItem('loginToken'));
-            this.homePanel = new FacadePanel().assemble();
+            var s = new Signup();
         }
         else{
             this.homePanel = new UtilityPanel(this.options).utilityPanel;

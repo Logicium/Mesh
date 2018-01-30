@@ -4,7 +4,7 @@ var Events =  require('./../server/Databases').Events;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Event = function(dataModel){
-    this.name = dataModel[0];
+    this.name = dataModel[0]+'';
     this.hosts = dataModel[1];
     this.guests = dataModel[2];
     this.description = dataModel[3];
@@ -13,6 +13,8 @@ var Event = function(dataModel){
     this.endTime = dataModel[6];
     this.image = dataModel[7];
     this.messages = [];
+    this.label = this.name;
+    this.icon = this.image;
 };
 
 router.get('/',function(request,response){

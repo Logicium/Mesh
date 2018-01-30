@@ -4,7 +4,13 @@ var Teams = require('./../server/Databases').Teams;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Team = function(dataModel){
-    this.name = dataModel[0];
+    this.name = dataModel[0]+'';
+    this.description = dataModel[1];
+    this.image = dataModel[2];
+    this.members = [dataModel[3]];
+    this.projects = [dataModel[4]]
+    this.label = this.name;
+    this.icon = this.image || 'public/images/demo/team.jpg';
 }
 
 router.get('/',function(request,response){

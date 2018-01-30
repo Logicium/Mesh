@@ -1,3 +1,5 @@
-2018/01/28-16:14:15.079 4c1c Recovering log #45
-2018/01/28-16:14:15.210 4c1c Delete type=0 #45
-2018/01/28-16:14:15.219 4c1c Delete type=3 #43
+2018/01/29-21:12:36.424 1bb4 Recovering log #6
+2018/01/29-21:12:36.428 1bb4 Level-0 table #8: started
+2018/01/29-21:12:36.490 1bb4 Level-0 table #8: 264 bytes OK
+2018/01/29-21:12:36.560 1bb4 Delete type=0 #6
+2018/01/29-21:12:36.561 1bb4 Delete type=3 #4

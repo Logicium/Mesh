@@ -15,6 +15,14 @@ var subtitle = function (htmlText) {
         .css('color','white').css('font-size','24px').css('font-family','Open Sans Condensed');
 };
 
+var panelTitle = function(name){
+    var appName = row().css('color','black').css('line-height','60px').css('padding','10px').css('background-color',transparentWhiteHeavy()).css('margin-bottom','10px');
+    return appName.append(
+        div().width('100%').addClass('text-center').text(name).css('font-size','24px').css('letter-spacing','8px')
+            .css('text-transform', 'uppercase').css('display','inline-block').css('font-family','Open Sans Condensed')
+    );
+};
+
 var button = function(name){
     return $('<div>').addClass('button ghost').css('line-height','40px').css('min-width','100%').css('margin-top','40px').text(name);
 };
@@ -23,6 +31,15 @@ var buttonCol = function(name,colNum){
     return col(colNum).addClass('button cta').css('letter-spacing','6px').css('text-transform', 'uppercase')
         .css('font-family','Open Sans Condensed').text(name).css('margin',0).css('padding',0)
         .css('max-width','100%').css('height','100%').css('line-height','50px').css('font-size','16px');
+};
+
+var dimensionalPanel = function() {
+    return div().css('position', 'absolute').addClass('facePanel').css('background', transparentWhite())
+        .css('padding', '10px').css('margin', '10px').css('min-height', '600px').css('width', '95%');
+};
+
+var dimensionalWindow = function(perspective){
+    return div().css('transform-style','preserve-3d').css('perspective', perspective || '50em');
 };
 
 var input = function (name,type) {
@@ -46,4 +63,25 @@ var list = function(array){
         list.append(div().html(array[i]));
     }
     return list;
+};
+
+var siteBar = function (name,buttonName,click) {
+    buttonName = buttonName || 'Logout';
+    click = click || function(){
+            sessionStorage.setItem('token',null);
+            sessionStorage.setItem('folder',null);
+            swal({title:'Logged out',type:'success',onClose:function(){
+                var S = new Signup();
+            }});
+        };
+    var appName = row().css('line-height','75px').height('80px');
+    var logoutButton = buttonCol(buttonName,'','1').height('100%').css('line-height','75px').click(click);
+    var styledText = div().addClass('appName col-xs-3').text(name).css('font-size','26px').css('color','black').css('letter-spacing','10px')
+        .css('text-transform', 'uppercase').css('display','inline-block').css('font-family','Open Sans Condensed').height('100%').css('background-color',transparentWhiteHeavy());
+
+    return appName.append(
+        styledText,
+        col('8').height('100%').css('background-color',transparentWhiteHeavy()),
+        logoutButton
+    );
 };

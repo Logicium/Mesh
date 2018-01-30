@@ -15,7 +15,6 @@ var ProfilesDB = new LinvoDB('profiles',{});
 var ProjectsDB = new LinvoDB('projects',{});
 var RolesDB = new LinvoDB('roles',{});
 var TasksDB = new LinvoDB('tasks',{});
-//var TeamsDB = new LinvoDB('teams',{});
 
 Databases = {
     Users: UsersDB,
@@ -29,7 +28,6 @@ Databases = {
     Projects: ProjectsDB,
     Roles: RolesDB,
     Tasks: TasksDB,
-    //Teams: TeamsDB
 };
 
 //Initialize first user for Users Database:
