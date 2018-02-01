@@ -38,6 +38,13 @@ router.post('/add',function(request,response){
   });
 });
 
+router.post('/find',function(request,response){
+    console.log("Finding one event: "+request.body._id);
+    Events.find({'_id':request. body._id}, function (err, docs) {
+        response.send(docs);
+    });
+});
+
 router.post('/update',function(request,response){
     //Update
 });

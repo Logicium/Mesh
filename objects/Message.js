@@ -28,11 +28,13 @@ router.post('/add',function(request,response){
     console.log(newDoc);
     response.send({message:"New message added!",data:newDoc});
   });
+});
 
-  //Special feature coming soon ;)
-  // var a = new Activity(request.body.activity);
-  // Activities.insert(a,function(err,newDoc){});
-
+router.post('/find',function(request,response){
+    console.log("Finding one: "+request.body._id);
+    Messages.find({'_id':request.body._id}, function (err, docs) {
+        response.send(docs);
+    });
 });
 
 router.post('/update',function(request,response){

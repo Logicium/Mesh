@@ -13,11 +13,8 @@ var allowCrossDomain = function (req, res, next) {
     next();
 };
 app.use(allowCrossDomain);
-
-var urlencodedParser = bodyParser.urlencoded({extended: false});
 app.use("/public", express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(require('./Routes'));
 
 var Member = require('./objects/Member.js');

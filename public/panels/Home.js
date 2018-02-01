@@ -15,8 +15,8 @@ Home.prototype = {
     chooseLandingPage:function(){
         //SessionStorage.loginToken = {token:abc123}
 
-        if(sessionStorage.getItem('loginToken')===null){
-          console.log(sessionStorage.getItem('loginToken'));
+        if(sessionStorage.getItem('token')===null){
+          console.log(sessionStorage.getItem('token'));
             var s = new Signup();
         }
         else{

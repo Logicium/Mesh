@@ -46,9 +46,9 @@ router.post('/add',function(request,response){
 });
 
 //Returns only the raw JSON of a userObject
-router.get('/find',function(request,response){
-    console.log("Finding one member: "+response._id);
-    Members.find({'_id':response._id}, function (err, docs) {
+router.post('/find',function(request,response){
+    console.log("Finding one member: "+(request.body._id));
+    Members.find({'_id':request.body._id}, function (err, docs) {
         response.send(docs);
     });
 });
@@ -57,13 +57,6 @@ router.post('/update',function(request,response){
     console.log('Update request: '+request._id);
     Members.update({ id: request._id }, request, {}, function(err, doc) {
         response.send({message:"Updated successfully."})
-    });
-});
-
-router.get('/findOneObject',function(request,response){
-    console.log("Finding one user complete: "+response._id);
-  Members.find({'_id':response._id}, function (err, docs) {
-        response.send(new Members(docs));
     });
 });
 

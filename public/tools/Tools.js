@@ -57,9 +57,9 @@ var InputForm = function(inputs,toolData){
                   newInput
               );
           }
-
-
       });
+
+      
       $.each(linkedData.Teams.keys,function(){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){

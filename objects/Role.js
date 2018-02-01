@@ -23,7 +23,7 @@ router.get('/',function(request,response){
 });
 
 router.post('/add',function(request,response){
-  console.log("Add project request: ");
+  console.log("Add role request: ");
   console.log(request.body);
   var r = new Role(request.body.inputs);
   Roles.insert(r, function (err, newDoc) {
@@ -33,6 +33,13 @@ router.post('/add',function(request,response){
     });
     response.send({message:"New role added",data:newDoc});
   });
+});
+
+router.post('/find',function(request,response){
+    console.log("Finding one role: "+request.body._id);
+    Roles.find({'_id':request.body._id}, function (err, docs) {
+        response.send(docs);
+    });
 });
 
 router.post('/update',function(request,response){

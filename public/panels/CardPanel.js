@@ -13,7 +13,6 @@ CardPanel.prototype = {
       $.each(data,function(){
         self.cards.append(new Card(this,self.name));
       });
-
     });
     return $(this.cardPanel);
   }

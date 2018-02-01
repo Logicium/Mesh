@@ -20,3 +20,16 @@ function syncJSON(i_url,callback) {
         error: function (msg) { alert('error : ' + msg.d); }
     });
 }
+
+function postJSON(i_url,data,callback) {
+    $.ajax({
+        type: "POST",
+        async: false,
+        data:data,
+        url: i_url,
+        //contentType: "application/json",
+        dataType: "json",
+        success: function (msg) { callback(msg) },
+        error: function (msg) { alert('error : ' + msg.d); }
+    });
+}
