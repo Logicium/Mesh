@@ -4,6 +4,7 @@ var highlightText = function(text){return $('<span style=\"background: rgba(0,0,
 var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>');};
 var row = function(){return $('<div>').addClass('row').css('margin','0 auto');};
 var col = function(colNum){ return  div().addClass('col-xs-'+colNum).addClass('text-center');};
+var icon = function(icon){return $('<i>').addClass('fa fa-'+icon)};
 
 var title = function(htmlText){
     return div().css('letter-spacing','12px').html(htmlText)
