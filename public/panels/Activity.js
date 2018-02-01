@@ -19,7 +19,7 @@ var ActivityPanel = function(name){
     this.activityPanel.css('margin-top','15px').css('height','100%').css('width','calc(100% + 15px)');
     this.name = name.replace(/ /g,'').toLowerCase();
     this.cards = row().addClass('cards text-center');
-    this.newMemberName = text('New Members:',transparentWhiteHeavy(),'22px').css('margin-right','-15px').css('background-color',transparentBlack());
+    this.newMemberName = text('New Members:','white','20px').css('margin-right','-15px').css('background-color',transparentBlack());
     this.newMemberContent = div().addClass('newMembers');
     this.newMembers = col(4).append(this.newMemberName,this.newMemberContent);
     this.feed = col(8).addClass('feed');
