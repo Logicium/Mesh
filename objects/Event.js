@@ -14,7 +14,7 @@ var Event = function(dataModel){
     this.image = dataModel[7];
     this.messages = [];
     this.label = this.name;
-    this.icon = this.image || ;
+    this.icon = this.image || 'public/images/demo/event.jpg';
 };
 
 router.get('/',function(request,response){

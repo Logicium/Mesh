@@ -52,7 +52,7 @@ var EventActivityCard = function(self,data){
   self.card = div().addClass('card').css('margin-right','-15px').css('margin-bottom','15px');
   postJSON('/events/find',{"_id":data.link},function(newData){
         newData = newData[0];
-        self.eventNamedImage = div().css(Styles.backgroundImage(newData.icon,'50% 50%')).height('75px');
+        self.eventNamedImage = div().css(Styles.backgroundImage(newData.icon)).css('background-position','50% 50%').height('75px');
         self.timeIcon = div().text(newData.startTime+' - '+newData.endTime);
         self.locationIcon = div().text(newData.location);
         self.time = col(6).append(icon('clock-o').css('font-size','26px'),self.timeIcon);
