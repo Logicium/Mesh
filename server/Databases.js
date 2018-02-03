@@ -32,28 +32,28 @@ Databases = {
 
 //Initialize first user for Users Database:
 
-var adminUser = {
-    username:'admin',
-    password:'superSecret'
+var member1 = {
+    email:'memberY@m.c',
+    password:'password'
 };
 
-// Databases.Users.insert(adminUser, function (err, newDoc) {
-//     console.log(newDoc);
-//     console.log('Admin user added.');
-// });
-//
-// //Initialize Settings Database with the following code:
-//
-// var Config = fs.readFile(path.join(__dirname, './../public/libraries/Config.json'),'utf8',function (err,data) {
-//     if (err) throw err;
-//     data = JSON.parse(data);
-//     console.log(data);
-//     for(var i=0;i<data.length;i++){
-//         Databases.Settings.insert(data[i], function (err, newDoc) {
-//             console.log(newDoc);
-//             console.log('Settings file initialized');
-//         });
-//     }
-// });
+Databases.Members.insert(member1, function (err, newDoc) {
+    console.log(newDoc);
+    console.log('Member added');
+
+    var Config = fs.readFile(path.join(__dirname, './../public/libraries/Config.json'),'utf8',function (err,data) {
+        if (err) throw err;
+        data = JSON.parse(data);
+        console.log(data);
+        for(var i=0;i<data.length;i++){
+            data[i].memberLink = newDoc._id;
+            Databases.Settings.insert(data[i], function (err, newDoc) {
+                console.log(newDoc);
+                console.log('Settings file initialized');
+            });
+        }
+    });
+});
+
 
 module.exports = Databases;

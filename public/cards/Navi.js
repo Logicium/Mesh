@@ -11,7 +11,8 @@ var Navi = function(){
         {name:'Teams',icon:'institution'},
         {name:'Roles',icon:'briefcase'},
         {name:'Tasks',icon:'tasks'},
-        {name:'Profile',icon:'user'}
+        {name:'Profile',icon:'user'},
+        {name:'Settings',icon:'cog'}
     ];
 
     console.log("Navi component.");
@@ -62,6 +63,7 @@ UtilitySelectionCard.prototype = {
         else if(name=="Tasks"){return new Tasks().assemble()}
         else if(name=="Teams"){return new Teams().assemble()}
         else if(name=="Profile"){return new Profile().assemble()}
+        else if(name=="Settings"){return new SettingsPanel()}
     },
 
     assemble:function(){

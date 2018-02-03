@@ -16,6 +16,7 @@ app.use(allowCrossDomain);
 app.use("/public", express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('./Routes'));
+app.use('/settings',require('./server/Settings'));
 
 var Member = require('./objects/Member.js');
 var Activity = require('./objects/Activity.js');

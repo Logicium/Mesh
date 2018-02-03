@@ -8,6 +8,7 @@ var UtilityPanel = function(options){
     this.eastNavi = $('<div>').addClass('eastNavi col-xs-2');
     this.toolBar = new ToolBar(options.tools).assemble();
     if(options.name === "A C T I V I T Y"){this.cardPanel = new ActivityPanel(options.name)}
+    else if(options.name === "S E T T I N G S"){ this.cardPanel = new Settings(options.name)}
     else{this.cardPanel = new CardPanel(options.name).assemble()}
     console.log("Util panel.");
     this.setProperties();

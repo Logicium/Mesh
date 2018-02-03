@@ -5,6 +5,7 @@ var highlightTextLight = function(text){return $('<span style=\"background:'+tra
 var row = function(){return $('<div>').addClass('row').css('margin','0 auto');};
 var col = function(colNum){ return  div().addClass('col-xs-'+colNum).addClass('text-center');};
 var icon = function(icon){return $('<i>').addClass('fa fa-'+icon)};
+var panel = function(){return div().addClass('contentPanel animated fadeIn').css('overflow','auto').css('padding','100px').css('padding-top','25px');}
 
 var title = function(htmlText){
     return div().css('letter-spacing','12px').html(htmlText)
@@ -29,8 +30,10 @@ var button = function(name){
 };
 
 var buttonCol = function(name,colNum){
-    return col(colNum).addClass('button cta').css('letter-spacing','6px').css('text-transform', 'uppercase')
-        .css('font-family','Open Sans Condensed').text(name).css('margin',0).css('padding',0)
+    this.bCol = col(colNum);
+    if(name){this.bCol.text(name||'.')}
+    return this.bCol.addClass('button cta').css('letter-spacing','6px').css('text-transform', 'uppercase')
+        .css('font-family','Open Sans Condensed').css('margin',0).css('padding',0)
         .css('max-width','100%').css('height','100%').css('line-height','50px').css('font-size','16px');
 };
 

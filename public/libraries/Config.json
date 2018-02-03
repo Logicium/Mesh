@@ -1,0 +1,12 @@
+[
+    {
+      "name": "Interface",
+      "data": {
+        "backgroundImage": "public/images/bg1.jpg"
+      }
+    },
+    {
+        "name":"Account",
+        "data": {   }
+    }
+]
