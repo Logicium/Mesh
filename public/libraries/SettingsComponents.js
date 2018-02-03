@@ -1,7 +1,7 @@
 var SettingsNav = function (panels) {
     //for every panel in the Config File, generate a navigation element
-    this.navCol = col(4);
-    this.nav = div().css('font-size','16px').css('line-height','100px').css('min-height','400px').css('background',transparentWhiteHeavy()).css('margin','30px');
+    this.navCol = col(3).css('padding','0');
+    this.nav = div().css('font-size','16px').css('line-height','100px').css('min-height','400px').css('background',transparentWhiteHeavy()).css('margin-top','15px');
     var self = this;
 
     for (var key in Config) {
@@ -32,6 +32,7 @@ var Props = function (key) {
     console.log(key);
     console.log(Config[key]);
     var pathName = '';
+    if(Config[key].name == 'Account'){postJSON('/members/find',function(data){Config[key].data}); }
     iterate(Config[key].data,0,pathName);
 
     function iterate(obj,count,pathName) {
@@ -143,8 +144,8 @@ var PropTitle = function (key) {
 var Property = function(key,value,idNumber,pathName){
 
     this.prop = row().addClass('.propertyRow').attr('id',idNumber).attr('data-path',pathName);
-    this.key = col(3).css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).removeClass('text-center').addClass('text-left');
-    this.value = col(7).css('margin-top','40px').append(text(value,'black','18px')).removeClass('text-center').addClass('text-left');
+    this.key = col(4).css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).removeClass('text-center').addClass('text-left');
+    this.value = col(6).css('margin-top','40px').append(text(value,'black','18px')).removeClass('text-center').addClass('text-left');
 
     this.edit = col(2).removeClass('text-center').addClass('text-right').append(button('Edit').css('color','white').addClass('text-center').css('min-width','50px').click(function () {
         console.log($('body').find(this).parent().parent());

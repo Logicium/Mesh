@@ -8,7 +8,7 @@ var Databases = require('./Databases');
 
 router.post('/list',function(request,response){
     console.log("Download all Settings request.");
-    Databases.Settings.find({}, function (err, docs) {
+    Databases.Settings.find({loginToken:request.body.token}, function (err, docs) {
         response.send(docs);
     });
 });
@@ -19,11 +19,13 @@ router.post('/login', function (request, response) {
     var incomingUser = request.body;
     console.log(incomingUser);
 
-    var Users = Databases.Members.find({username:incomingUser.email,password:incomingUser.password},function(err,docs){
-        console.log(docs);
-        if (!(docs.length==0)) {
-            var token = jwt.sign({U:incomingUser.fullName}, 'superSecret', {expiresIn: '24h'}); //expires in 24 hours
-            response.send({message: 'Login Success!', success: true, token: token});
+    var Users = Databases.Members.findOne({username:incomingUser.email,password:incomingUser.password},function(err,docs){
+        console.log(doc);
+        if (doc) {
+            var token = jwt.sign({U:incomingUser.fullName}, 'superSecret', {expiresIn: '24h'});
+            doc.loginToken = token;
+            doc.save(function (err) {});
+            response.send({message: 'Login Success!', data:doc, success: true, token: token});
         }
         else {
             response.send({message: 'Login Fail', success: false});

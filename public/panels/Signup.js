@@ -73,7 +73,7 @@ var loginClick = function(){
     ];
     swal.queue(steps).then(function (result) {
         swal.resetDefaults();
-        $.post('/files/login', {username: result[0], password: result[1]})
+        $.post('/settings/login', {username: result[0], password: result[1]})
             .done(function (data) {
                 console.log(data);
                 if (data.success) {
@@ -81,7 +81,7 @@ var loginClick = function(){
                     sessionStorage.setItem('token',data.token);
                     sessionStorage.setItem('folder',data.data.userFolder);
                     swal({title: data.message, type: 'success',onClose:function(){
-                        $.post('/files/listVirtual',{token:Token},function(data){
+                        $.post('/settings/list',{token:Token},function(data){
                             console.log(data);
                             var WA = new WebApp();
                             WA.assemble(data);
