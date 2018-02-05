@@ -31,7 +31,7 @@ var ToolBar = function(contextTools){
 var ToolCard = function(name,icon,inputs,size,toolData){
   self1 = this
   this.toolCard = buttonCol('',size).addClass('text-center').append(
-      $('<div>').css('color','white').addClass('toolCard animated fadeInRight').css('min-width','40px !important').css('min-height','40px !important').append(
+      $('<div>').css('color','white').addClass('toolCard animated fadeIn').css('min-width','40px !important').css('min-height','40px !important').append(
         div().css('margin','0 auto').addClass('toolIcon').prepend($('<i>').addClass('fa fa-'+icon).css('color','white')),
         div().css('margin','0 auto').addClass('toolName').css('color','white').text(name)
       ).hover(

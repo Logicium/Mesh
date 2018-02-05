@@ -33,7 +33,7 @@ Databases = {
 //Initialize first user for Users Database:
 
 var member1 = {
-    email:'memberXYZ@m.c',
+    email:'memberXY@m.c',
     password:'password'
 };
 

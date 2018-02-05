@@ -19,7 +19,6 @@ var Signup = function () {
     this.loginCol = col(6);
     this.signupButton = button('Signup').css(Styles.buttonText()).removeClass('ghost').addClass('cta').click(signupClick);
     this.loginButton = button('Login').css(Styles.buttonText()).click(loginClick);
-
     this.footer = div();
 
     return $('body').empty().append(
@@ -83,8 +82,7 @@ var loginClick = function(){
                     swal({title: data.message, type: 'success',onClose:function(){
                         $.post('/settings/list',{token:Token},function(data){
                             console.log(data);
-                            var WA = new WebApp();
-                            WA.assemble(data);
+                            $('body').empty().append(new Home().assemble());
                         });
                     }});
                 }

@@ -15,6 +15,7 @@ var SettingsNav = function (panels) {
 };
 
 var NavElem = function (key) {
+    if(Config[key].name == 'Account'){postJSON('/members/find',{token:Token},function(newData){Config[key].data = newData}); }
     return $('<div>').append($('<div>').text(Config[key].name).css('cursor','pointer').css('width','100%').addClass('hvr-underline-from-left')).click(function(){
         $('.contentPanel').replaceWith(
             new Props(key)
@@ -32,7 +33,6 @@ var Props = function (key) {
     console.log(key);
     console.log(Config[key]);
     var pathName = '';
-    if(Config[key].name == 'Account'){postJSON('/members/find',function(data){Config[key].data}); }
     iterate(Config[key].data,0,pathName);
 
     function iterate(obj,count,pathName) {

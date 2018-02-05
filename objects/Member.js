@@ -47,8 +47,9 @@ router.post('/add',function(request,response){
 
 //Returns only the raw JSON of a userObject
 router.post('/find',function(request,response){
-    console.log("Finding one member: "+(request.body._id));
-    Members.find({'_id':request.body._id}, function (err, docs) {
+    console.log("Finding one member: "+(request.body._id || request.body.token ));
+    if(request.body._id === undefined){request.body._id = 'skip'};
+    Members.find({$or:[{'_id':request.body._id},{'loginToken':request.body.token}]}, function (err, docs) {
         response.send(docs);
     });
 });

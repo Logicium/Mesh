@@ -8,8 +8,10 @@ var Databases = require('./Databases');
 
 router.post('/list',function(request,response){
     console.log("Download all Settings request.");
-    Databases.Settings.find({loginToken:request.body.token}, function (err, docs) {
-        response.send(docs);
+    Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Databases.Settings.find({memberLink:linkedMember._id},function(err,linkedSettings){
+            response.send(linkedSettings);
+        });
     });
 });
 
@@ -19,7 +21,7 @@ router.post('/login', function (request, response) {
     var incomingUser = request.body;
     console.log(incomingUser);
 
-    var Users = Databases.Members.findOne({username:incomingUser.email,password:incomingUser.password},function(err,docs){
+    var Users = Databases.Members.findOne({username:incomingUser.email,password:incomingUser.password},function(err,doc){
         console.log(doc);
         if (doc) {
             var token = jwt.sign({U:incomingUser.fullName}, 'superSecret', {expiresIn: '24h'});

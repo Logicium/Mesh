@@ -1,5 +1,13 @@
+var Config;
+var Token = sessionStorage.getItem('token');
 
 var UtilityPanel = function(options){
+
+    postJSON("/settings/list",{token:Token}, function (data) {
+        console.log(data);
+        Config=data;
+    });
+
     this.options = options;
     this.utilityPanel = $('<div>').addClass('utilityPanel');
     this.activityPanel = $('<div>').addClass('activityPanel col-xs-8');
@@ -11,6 +19,7 @@ var UtilityPanel = function(options){
     else if(options.name === "S E T T I N G S"){ this.cardPanel = new Settings(options.name)}
     else{this.cardPanel = new CardPanel(options.name).assemble()}
     console.log("Util panel.");
+
     this.setProperties();
     this.applyBanner();
     this.assemble();
@@ -19,8 +28,8 @@ var UtilityPanel = function(options){
 UtilityPanel.prototype={
     setProperties: function(){
         this.utilityPanel.css('width','100%').css('height','100%');
-        var bgImage = $('<div class="backgroundImage"></div>');
-        var homeImage = 'https://images.unsplash.com/photo-1476908965434-f988d59d7abd?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&s=264e52cf5b973f5da848ee12dca724f2';
+        var bgImage = div().addClass('backgroundImage');
+        var homeImage = _.find(Config,{name:'Interface'}).data.backgroundImage;//'https://images.unsplash.com/photo-1476908965434-f988d59d7abd?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&s=264e52cf5b973f5da848ee12dca724f2';
         $(bgImage).css('background-image','linear-gradient(to left,rgba(24, 90, 157, 0.45), rgba(67, 206, 162, 0.45)), url('+ homeImage +')');
         this.utilityPanel.append(bgImage);
         this.westNavi.css('height','100%').css('padding','0').css('min-width','150px');
