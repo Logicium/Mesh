@@ -9,11 +9,12 @@ var UtilityPanel = function(options){
     });
 
     this.options = options;
-    this.utilityPanel = $('<div>').addClass('utilityPanel');
-    this.activityPanel = $('<div>').addClass('activityPanel col-xs-8');
-    this.northNavi = $('<div>').addClass('northNavi col-xs-8').css('height','125px');
-    this.westNavi = $('<div>').addClass('westNavi col-xs-2');
-    this.eastNavi = $('<div>').addClass('eastNavi col-xs-2');
+    this.utilityPanel = div().addClass('utilityPanel');
+    this.activityPanel = div().addClass('activityPanel col-xs-8').height('100vh').css('overflow-y','scroll');
+    this.scrollable = div().css('overflow-y','scroll').css('position','absolute').css('max-height','98%');
+    this.northNavi = div().addClass('northNavi col-xs-8');
+    this.westNavi = div().addClass('westNavi col-xs-2');
+    this.eastNavi = div().addClass('eastNavi col-xs-2');
     this.toolBar = new ToolBar(options.tools).assemble();
     if(options.name === "A C T I V I T Y"){this.cardPanel = new ActivityPanel(options.name)}
     else if(options.name === "S E T T I N G S"){ this.cardPanel = new Settings(options.name)}
@@ -34,7 +35,7 @@ UtilityPanel.prototype={
         this.utilityPanel.append(bgImage);
         this.westNavi.css('height','100%').css('padding','0').css('min-width','150px');
         this.westNavi.append(new Navi().naviPanel);
-        this.centeredText = $('<div>').css('padding-top','75px').addClass('centeredText topTitle text-center').text(this.options.name).css('font-family','Oswald').css('font-weight','300');
+        this.centeredText = div().css('padding-top','75px').addClass('centeredText topTitle text-center').text(this.options.name).css('font-family','Oswald').css('font-weight','300');
         this.northNavi.append(this.centeredText);
         this.northNavi.css('width','100%').css('height','200px').css('padding-left','0').css('padding-right','0');
         this.eastNavi.css('height','100vh').css('padding','0');

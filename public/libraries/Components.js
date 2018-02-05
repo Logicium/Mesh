@@ -1,7 +1,7 @@
 var div = function(){return $('<div>')};
 var text = function(string,color,size){return div().text(string).css('color',color).css('font-size',size);};
 var highlightText = function(text){return $('<span style=\"background: rgba(0,0,0,0.71);\">&nbsp;'+text+'&nbsp;</span>').css('color','white');};
-var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>');};
+var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>').css('color','black');};
 var row = function(){return $('<div>').addClass('row').css('margin','0 auto');};
 var col = function(colNum){ return  div().addClass('col-xs-'+colNum).addClass('text-center');};
 var icon = function(icon){return $('<i>').addClass('fa fa-'+icon)};

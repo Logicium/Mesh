@@ -33,13 +33,29 @@ Databases = {
 //Initialize first user for Users Database:
 
 var member1 = {
-    email:'memberXY@m.c',
-    password:'password'
+    firstName : 'Member',
+    lastName : 'One',
+    fullName : 'Member One',
+    email : 'memberOne@m.c',
+    password : 'password',
+    image : 'public/images/demo/member.jpg',
+    roles : [],
+    teams : [],
+    projects : [],
+    activity : [],
+    messages : [],
+    events : [],
+    label : 'Member One',
+    icon : 'public/images/demo/member.jpg'
 };
 
 Databases.Members.insert(member1, function (err, newDoc) {
     console.log(newDoc);
     console.log('Member added');
+
+    Databases.Activities.insert({message:newDoc.fullName+" was added",type:'memberAdd',link: newDoc._id}, function (err, newDoc) {
+      console.log(newDoc);
+    });
 
     var Config = fs.readFile(path.join(__dirname, './../public/libraries/Config.json'),'utf8',function (err,data) {
         if (err) throw err;

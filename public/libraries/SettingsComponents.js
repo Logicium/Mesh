@@ -141,6 +141,15 @@ var PropTitle = function (key) {
     return text(key,'black','26px').addClass('propTitle text-left').css('background',transparentWhite()).css('margin','10px').css('padding','5px').css('text-transform','capitalize');
 };
 
+var PrivateProperty = function(key,value,idNumber,pathName){
+
+    this.prop = row().addClass('.propertyRow').attr('id',idNumber).attr('data-path',pathName);
+    this.key = col(6).css('margin-top','40px').append(highlightTextLight(key+':&nbsp;').css('font-size','20px')).removeClass('text-center').addClass('text-left');
+    this.value = col(6).css('margin-top','40px').append(text(value,'black','18px')).removeClass('text-center').addClass('text-left');
+
+    return this.prop.append(this.key,this.value)
+};
+
 var Property = function(key,value,idNumber,pathName){
 
     this.prop = row().addClass('.propertyRow').attr('id',idNumber).attr('data-path',pathName);

@@ -104,15 +104,15 @@ router.post('/update',function(request,response){
     var newConfig = JSON.parse(request.body.newConfig);
     console.log(newConfig);
 
-    Databases.Settings.findOne({name:parentName},function (err, doc) {
-
-        console.log(JSON.stringify(doc));
-        doc.data = newConfig[parentIndex].data;
-        console.log('Logging doc');
-        doc.save(function (err) {});
-        response.send({message:'Successfully Updated',doc:doc});
+    Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Databases.Settings.findOne({memberLink:linkedMember._id},function(err,linkedSettings){
+            console.log(JSON.stringify(linkedSettings));
+            linkedSettings.data = newConfig[parentIndex].data;
+            console.log('Logging doc');
+            linkedSettings.save(function (err) {});
+            response.send({message:'Successfully Updated',doc:linkedSettings});
+        });
     });
-
 });
 
 router.post('/find',function(request,response){
