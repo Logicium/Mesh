@@ -5,14 +5,15 @@ var Activities = require('./../server/Databases.js').Activities;
 
 var Project = function(dataModel){
     this.name = dataModel[0]+'';
-    this.description = dataModel[1];
-    this.image = dataModel[3]
-    this.members = [dataModel[2]];
+    this.description = dataModel[1]+'';
+    this.image = dataModel[2]+'';
+    this.members = dataModel[3];
+    this.roles = dataModel[4];
     this.tasks = [];
     this.events = [];
     this.messages = [];
-    this.label = this.name;
-    this.icon = this.image  || 'public/images/demo/project.jpg';
+    this.label = this.name+'';
+    this.icon = this.image+''  || 'public/images/demo/project.jpg';
 }
 
 router.get('/',function(request,response){

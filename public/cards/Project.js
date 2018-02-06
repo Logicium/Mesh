@@ -2,15 +2,21 @@ var ProjectCard = function(newData){
     console.log(newData);
     var self = this;
     self.card = col(12).addClass('card').css('margin-top','10px');
-    self.content = div().css('min-height','200px').css('padding-left','5px').css('margin-right','-15px').css('background-color',transparentWhite())
-    self.eventNamedImage = div().css(Styles.backgroundImage(newData.icon)).css('background-position','50% 50%').height('100px');
-    self.timeIcon = div().text(newData.startTime+' - '+newData.endTime);
-    self.locationIcon = div().text(newData.location);
-    //self.time = col(6).append(icon('clock-o').css('font-size','26px'),self.timeIcon);
-    //self.location = col(6).append(icon('map-marker').css('font-size','26px'),self.locationIcon);
-    self.statsRow = row().css('padding-top','10px').css('color','white').height('100px').css('background-color',transparentBlack());
-    self.name = div().append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).css('padding-top','15px');
+    self.content = div().css('min-height','225px').css('margin-right','-15px').css('background-color',transparentWhite())
+    self.projectNamedImage = div().css(Styles.backgroundImage(newData.icon)).css('background-position','50% 50%').css('min-height','225px');
+    self.infoRow = row();
+    self.membersRow1 = row().css('padding-top','100px').css('color','white');
+    $.each(['','','','','','','','','','','',''],function(){self.membersRow1.append(new MemberIconLong('public/images/demo/member.jpg'))});
+    // self.membersRow2 = row().css('padding-top','20px').css('color','white').append(col(1));
+    // $.each(['','','','',''],function(){self.membersRow2.append(new MemberIcon('public/images/demo/member.jpg'))});
+    self.name = col(6).append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
+    self.desc = col(6).append(highlightTextLight(newData.description).css('font-size','18px').css('margin','0 auto')).removeClass('text-center').addClass('text-right').css('padding-top','15px');
+    self.card.append( self.content.append( self.projectNamedImage.append(self.infoRow.append(self.name,self.desc), self.membersRow1 )));
     this.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(newData)); });
-    self.card.append( self.content.append( self.eventNamedImage.append(self.name), self.statsRow.append(self.time,self.location)  ));
     return self.card;
 };
+
+var MemberIconLong = function(image){
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
+    return col(1).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
+}
