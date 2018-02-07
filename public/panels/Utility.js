@@ -11,6 +11,14 @@ var UtilityPanel = function(options){
     this.options = options;
     this.utilityPanel = div().addClass('utilityPanel');
     this.activityPanel = div().addClass('activityPanel col-xs-8').height('100vh').css('overflow-y','scroll');
+    this.activityPanel.resizable();
+    this.activityPanel.resize(function(){
+       $('.eastNavi').width($(".utilityPanel").width()-$(".activityPanel").width()-$(".westNavi").width());
+    });
+    $(window).resize(function(){
+       $('.eastNavi').width($(".utilityPanel").width()-$(".activityPanel").width()-$(".westNavi").width());
+       //$('.activityPanel').height($(".utilityPanel").height());
+    });
     this.scrollable = div().css('overflow-y','scroll').css('position','absolute').css('max-height','98%');
     this.northNavi = div().addClass('northNavi col-xs-8');
     this.westNavi = div().addClass('westNavi col-xs-2');

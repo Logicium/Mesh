@@ -10,6 +10,7 @@ var Role = function(dataModel){
     this.image = dataModel[3];
     this.members = [dataModel[4]]
     this.messages = [];
+    this.resources = [];
     this.label = this.name.toLowerCase();
     this.icon = this.image  || 'public/images/demo/role.jpg';
 };

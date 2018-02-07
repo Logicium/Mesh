@@ -26,7 +26,7 @@ var panelTitle = function(name){
 };
 
 var button = function(name){
-    return $('<div>').addClass('button ghost').css('line-height','40px').css('min-width','100%').css('margin-top','40px').text(name);
+    return $('<div>').addClass('button ghost').css('line-height','40px').css('min-width','100%').text(name);
 };
 
 var buttonCol = function(name,colNum){

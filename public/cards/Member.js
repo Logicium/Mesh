@@ -16,7 +16,7 @@ var MemberCard = function(newData){
 
     self.card.append(self.content.append( div().css('padding','15px').append(self.image),self.name,self.statsRow));
 
-    this.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(newData)); });
+    this.card.click(function(){ $('.eastNavi').replaceWith(new PrivateDetailCard(newData)); });
 
     return this.card;
 };

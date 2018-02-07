@@ -30,6 +30,7 @@ var MemberActivityCard = function(self,data){
         self.content = div().append(JSON.stringify(newData, null, 4)).css('min-height','150px')
         .css('padding-left','5px').css('background-color',transparentWhite()) ;
         self.card.append( div().css('padding','15px').append(self.image),self.name,self.statsRow);
+        self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(data)); });
     })
     return self.card;
 };
@@ -45,6 +46,7 @@ var RoleActivityCard = function(self,data){
         self.description = div().append(text(newData.description,'white','16px')).css('padding-top','40px');
         self.sideB = col(6).css('min-height','150px').css('background-color',transparentBlack()).append(self.description);
         self.card.append( self.roleRow.append(self.sideA,self.sideB) );
+        self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(data)); });
   })
   return self.card;
 };
@@ -61,6 +63,7 @@ var EventActivityCard = function(self,data){
         self.statsRow = row().css('padding-top','10px').css('color','white').height('75px').css('background-color',transparentBlack());
         self.name = div().append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).css('padding-top','15px');
         self.card.append( self.eventNamedImage.append(self.name), self.statsRow.append(self.time,self.location) );
+        self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(data)); });
   })
   return self.card;
 };
@@ -81,6 +84,7 @@ var ProjectActivityCard = function(self,data){
         self.name = col(6).append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
         self.desc = col(6).append(highlightTextLight(newData.description).css('font-size','18px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
         self.card.append( self.projectNamedImage.append(self.infoRow.append(self.name,self.desc), self.membersRow ));
+        self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(data)); });
   });
   return self.card;
 };
