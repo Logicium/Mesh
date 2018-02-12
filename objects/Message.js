@@ -1,32 +1,43 @@
 var express = require('express');
 var router = express.Router();
 var Messages =  require('./../server/Databases').Messages;
+var Members =  require('./../server/Databases').Members;
 
 var Message = function(dataModel){
-    this.members = [];
-    this.teams = [];
-    this.users = [];
-    this.message = "";
-    this.media = "";
+    this.from = dataModel[0]+'';
+    this.members = dataModel[1];
+    this.teams = dataModel[2];
+    this.message = dataModel[3]+'';
+    this.media = dataModel[4]+'';
+    this.org = '';
 };
 
-Message.prototype={
-
-};
-
+//Find all organization messages, then find all messages that belong to that user.
 router.get('/',function(request,response){
   Messages.find({}, function (err, docs) {
     response.send(docs);
   });
 });
 
+router.post('/list',function(request,response){
+    console.log("Download all user Messages request.");
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Messages.find({$and:[{members:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
+            response.send(orgMessages);
+        });
+    });
+});
+
 router.post('/add',function(request,response){
   console.log("Add message request: ");
   console.log(request.body);
   var m = new Message(request.body);
-  Messages.insert(m, function (err, newDoc) {
-    console.log(newDoc);
-    response.send({message:"New message added!",data:newDoc});
+  Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+      m.org = linkedMember.defaultOrg;
+      Messages.insert(m, function (err, newDoc) {
+        console.log(newDoc);
+        response.send({message:"New message added!",data:newDoc});
+      });
   });
 });
 

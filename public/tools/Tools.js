@@ -1,8 +1,8 @@
 var Search = function(){
-  this.searchPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+  this.searchPanel = div().addClass('toolPanel col-xs-8 animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
   this.searchPanel.height('125').css('width','calc(100% - 15px)').css('margin-left','15px');
   this.searchPanel.css('background','rgba(246, 246, 246, 0.31)');
-  this.searchForm = $('<div>').addClass("searchForm");
+  this.searchForm = div().addClass("searchForm");
   this.searchPanel.append(input('Find'));
 };
 Search.prototype = {
@@ -13,8 +13,13 @@ Search.prototype = {
 
 var LinkedData = function(){
     var self = this;
-    this.Members = {keys:['members','invitees','guests'],data:[]};
-    syncJSON('/members',function(data){console.log(data);self.Members.data = data});
+    this.Members = {keys:['members','invitees','guests','hosts'],data:[]};
+    postJSON('/members/list',{token:Token},function(data){
+        $.each(data,function(){
+            this.value = this.fullName+' - '+this._id;
+        });
+        self.Members.data = data;
+    });
     this.Teams =  {keys:['teams'],data:[]};
     syncJSON('/teams',function(data){console.log(data);self.Teams.data = data});
     this.Projects =  {keys:['projects'],data:[]};
@@ -23,28 +28,45 @@ var LinkedData = function(){
     syncJSON('/roles',function(data){console.log(data);self.Roles.data = data});
     this.Events =  {keys:['events'],data:[]};
     syncJSON('/events',function(data){console.log(data);self.Events.data = data});
-    this.Multi = {keys:['to','assignees'],data:[]};
-    syncJSON('/members',function(data){console.log(data);self.Multi.data = data});
+    this.Multi = {keys:['to','assignees'],data:function(request,response){
+        postJSON('/members/list',{token:Token},function(data){
+            self.Multi.data = data;
+            self.Multi.data.value = data._id;
+        });
+    }};
 }
 
 var InputForm = function(inputs,toolData){
   var linkedData = new LinkedData();
-  this.inputPanel = $('<div>').addClass('toolPanel col-xs-8 animated fadeInUp').css('width','calc(100% - 15px)').css('margin-left','15px').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+  this.inputPanel = div().addClass('toolPanel col-xs-8 animated fadeInUp').css('width','calc(100% - 15px)').css('margin-left','15px').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
   this.inputPanel.css('height','100%');
   this.inputPanel.css('background','rgba(246, 246, 246, 0.31)');
-  this.inputForm = $('<div>').addClass("inputForm");
+  this.inputForm = div().addClass("inputForm");
   var self2 = this;
   $.each(inputs,function(inputName){
       inputName = this;
       var newInput = input(this).addClass('name-form delay-1 animated fadeInUp text-center');
       $.each(linkedData.Members.keys,function(){
-          //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
-                  source:linkedData.Members.data,
                   minLength: 0,
+                  source: function( request, response ) {
+                      response( $.ui.autocomplete.filter(
+                         linkedData.Members.data, extractLast( request.term ) ) );
+                  },
+                  focus: function() {
+                    return false;
+                  },
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      var terms = split( this.value );
+                      // remove the current input
+                      terms.pop();
+                      // add the selected item
+                      terms.push( ui.item.value );
+                      // add placeholder to get the comma-and-space at the end
+                      terms.push( "" );
+                      $(newInput).val(terms.join( ", " ));
                       return false;
                   }
               });
@@ -59,7 +81,6 @@ var InputForm = function(inputs,toolData){
           }
       });
 
-      
       $.each(linkedData.Teams.keys,function(){
           //console.log(this.toString(),inputName.toLowerCase());console.log(this.toString()==inputName.toLowerCase());
           if(this.toString()==inputName.toLowerCase()){
@@ -67,7 +88,8 @@ var InputForm = function(inputs,toolData){
                   source:linkedData.Teams.data,
                   minLength: 0,
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      $(newInput).val(ui.item.label);
                       return false;
                   }
               });
@@ -88,7 +110,8 @@ var InputForm = function(inputs,toolData){
                   source:linkedData.Projects.data,
                   minLength: 0,
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      $(newInput).val(ui.item.label);
                       return false;
                   }
               });
@@ -109,7 +132,8 @@ var InputForm = function(inputs,toolData){
                   source:linkedData.Roles.data,
                   minLength: 0,
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      $(newInput).val(ui.item.label);
                       return false;
                   }
               });
@@ -130,7 +154,8 @@ var InputForm = function(inputs,toolData){
                   source:linkedData.Events.data,
                   minLength: 0,
                   select: function (event, ui) {
-                      $("#search").val(ui.item.label);
+                      event.preventDefault();
+                      $(newInput).val(ui.item.label);
                       return false;
                   }
               });
@@ -189,7 +214,7 @@ var autocompleteCard = function(body,item){
 }
 
 var Send = function(){
-    this.sendPanel = $('<div>').addClass('toolPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
+    this.sendPanel = div().addClass('toolPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
     this.sendPanel.css('height','100%').css('width','calc(100% - 15px)').css('margin-left','15px');
     this.sendPanel.css('background','rgba(246, 246, 246, 0.31)');
 };
@@ -198,8 +223,8 @@ Send.prototype = {
     assemble: function(formInputs){
       var routeBase = $('.topTitle').text().replace(/ /g,'').toLowerCase();
       var self = this;
-      self.sendMessage = $('<div>').addClass("sendPanel").text("Message sent!");
-      $.post('http://localhost:2101/'+routeBase+'/add',{inputs:formInputs},function(data){
+      self.sendMessage = div().addClass("sendPanel").text("Message sent!");
+      $.post('http://localhost:2101/'+routeBase+'/add',{token:Token,inputs:formInputs},function(data){
         console.log(data);
         $('.sendPanel').text(data.message);
       });
@@ -208,7 +233,7 @@ Send.prototype = {
 };
 
 var Delete = function(){
-  this.deletePanel = $('<div>').addClass('toolPanel');
+  this.deletePanel = div().addClass('toolPanel');
 }
 Delete.prototype = {
   assemble: function(){
@@ -217,7 +242,7 @@ Delete.prototype = {
 }
 
 var Edit = function(){
-  this.editPanel = $('<div>').addClass('toolPanel');
+  this.editPanel = div().addClass('toolPanel');
 }
 Edit.prototype = {
   assemble: function(){
@@ -226,7 +251,7 @@ Edit.prototype = {
 }
 
 var Back = function(){
-  this.backPanel = $('<div>').addClass('toolPanel');
+  this.backPanel = div().addClass('toolPanel');
 }
 Back.prototype = {
   assemble: function(){
@@ -235,7 +260,7 @@ Back.prototype = {
 }
 
 var More = function(){
-  this.morePanel = $('<div>').addClass('toolPanel');
+  this.morePanel = div().addClass('toolPanel');
 }
 More.prototype = {
   assemble: function(){

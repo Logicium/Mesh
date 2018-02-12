@@ -9,7 +9,7 @@ var CardPanel = function(name){
 CardPanel.prototype = {
   assemble:function(){
     var self = this;
-    $.get('http://localhost:2101/'+self.name,function(data){
+    postJSON('http://localhost:2101/'+self.name+'/list',{token:Token},function(data){
       $.each(data,function(){
         self.cards.append(new Card(this,self.name));
       });

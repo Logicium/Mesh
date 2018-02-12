@@ -8,5 +8,9 @@
     {
         "name":"Account",
         "data": {   }
+    },
+    {
+        "name":"Organization",
+        "data": {   }
     }
 ]

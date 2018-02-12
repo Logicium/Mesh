@@ -1,20 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var Events =  require('./../server/Databases').Events;
+var Members =  require('./../server/Databases').Members;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Event = function(dataModel){
     this.name = dataModel[0]+'';
     this.hosts = dataModel[1];
     this.guests = dataModel[2];
-    this.description = dataModel[3];
-    this.location = dataModel[4];
-    this.startTime = dataModel[5];
-    this.endTime = dataModel[6];
-    this.image = dataModel[7];
+    this.description = dataModel[3]+'';
+    this.location = dataModel[4]+'';
+    this.startTime = dataModel[5]+'';
+    this.endTime = dataModel[6]+'';
+    this.image = dataModel[7]+'';
     this.messages = [];
     this.label = this.name;
     this.icon = this.image || 'public/images/demo/event.jpg';
+    this.org = '';
 };
 
 router.get('/',function(request,response){
@@ -25,17 +27,31 @@ router.get('/',function(request,response){
   });
 });
 
-router.post('/add',function(request,response){
-  console.log("Add event request: ");
-  console.log(request.body);
-  var e = new Event(request.body.inputs);
-  Events.insert(e, function (err, newDoc) {
-    console.log(newDoc);
-    Activities.insert({message:newDoc.name+" was added",type:'eventAdd',link: newDoc._id}, function (err, newDoc) {
-      console.log(newDoc);
+router.post('/list',function(request,response){
+    console.log("Download all org Events request.");
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Events.find({org:linkedMember.defaultOrg},function(err,orgEvents){
+            response.send(orgEvents);
+        });
     });
-    response.send({message:"New event added",data:newDoc});
-  });
+});
+
+router.post('/add',function(request,response){
+    console.log("Add event request: ");
+    console.log(request.body);
+    var e = new Event(request.body.inputs);
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        e.org = linkedMember.defaultOrg;
+        Events.insert(e, function (err, newDoc) {
+            console.log(newDoc);
+            linkedMember.events.push(newDoc._id);
+            linkedMember.save(function(err){});
+            Activities.insert({message:newDoc.name+" was added",type:'eventAdd',link: newDoc._id,org:linkedMember.defaultOrg,creator:linkedMember._id}, function (err, newDoc) {
+              console.log(newDoc);
+            });
+            response.send({message:"New event added",data:newDoc});
+        });
+    });
 });
 
 router.post('/find',function(request,response){

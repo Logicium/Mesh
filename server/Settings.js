@@ -9,7 +9,7 @@ var Databases = require('./Databases');
 router.post('/list',function(request,response){
     console.log("Download all Settings request.");
     Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Databases.Settings.find({memberLink:linkedMember._id},function(err,linkedSettings){
+        Databases.Settings.find({$and:[{memberLink:linkedMember._id},{orgLink:linkedMember.defaultOrg}]},function(err,linkedSettings){
             response.send(linkedSettings);
         });
     });
@@ -105,7 +105,7 @@ router.post('/update',function(request,response){
     console.log(newConfig);
 
     Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Databases.Settings.findOne({memberLink:linkedMember._id},function(err,linkedSettings){
+        Databases.Settings.findOne({$and:[{name:parentName},{memberLink:linkedMember._id},{orgLink:linkedMember.defaultOrg}]},function(err,linkedSettings){
             console.log(JSON.stringify(linkedSettings));
             linkedSettings.data = newConfig[parentIndex].data;
             console.log('Logging doc');

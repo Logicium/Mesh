@@ -17,7 +17,7 @@ var Settings = function(){
         Config=data;
     });
 
-    this.settings = $('<div>').addClass('settingsPanel').css('overflow','hidden').css('height','100%').css('width','100%');
+    this.settings = $('<div>').addClass('settingsPanel').css('height','100%').css('width','100%');
     var bg = '';//default
     bg = _.find(Config,{name:'Interface'}).data.backgroundImage;
     this.contentRow = row();

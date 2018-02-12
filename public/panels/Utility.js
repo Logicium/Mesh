@@ -17,14 +17,13 @@ var UtilityPanel = function(options){
     });
     $(window).resize(function(){
        $('.eastNavi').width($(".utilityPanel").width()-$(".activityPanel").width()-$(".westNavi").width());
-       //$('.activityPanel').height($(".utilityPanel").height());
     });
-    this.scrollable = div().css('overflow-y','scroll').css('position','absolute').css('max-height','98%');
     this.northNavi = div().addClass('northNavi col-xs-8');
     this.westNavi = div().addClass('westNavi col-xs-2');
     this.eastNavi = div().addClass('eastNavi col-xs-2');
     this.toolBar = new ToolBar(options.tools).assemble();
     if(options.name === "A C T I V I T Y"){this.cardPanel = new ActivityPanel(options.name)}
+    else if(options.name === "P R O F I L E"){ this.cardPanel = new ProfilePanel(options.name)}
     else if(options.name === "S E T T I N G S"){ this.cardPanel = new Settings(options.name)}
     else{this.cardPanel = new CardPanel(options.name).assemble()}
     console.log("Util panel.");
@@ -38,7 +37,7 @@ UtilityPanel.prototype={
     setProperties: function(){
         this.utilityPanel.css('width','100%').css('height','100%');
         var bgImage = div().addClass('backgroundImage');
-        var homeImage = _.find(Config,{name:'Interface'}).data.backgroundImage;//'https://images.unsplash.com/photo-1476908965434-f988d59d7abd?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&s=264e52cf5b973f5da848ee12dca724f2';
+        var homeImage = _.find(Config,{name:'Interface'}).data.backgroundImage;
         $(bgImage).css('background-image','linear-gradient(to left,rgba(24, 90, 157, 0.45), rgba(67, 206, 162, 0.45)), url('+ homeImage +')');
         this.utilityPanel.append(bgImage);
         this.westNavi.css('height','100%').css('padding','0').css('min-width','150px');

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Projects =  require('./../server/Databases').Projects;
+var Members =  require('./../server/Databases').Members;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Project = function(dataModel){
@@ -14,6 +15,7 @@ var Project = function(dataModel){
     this.messages = [];
     this.label = this.name+'';
     this.icon = this.image+''  || 'public/images/demo/project.jpg';
+    this.org = '';
 }
 
 router.get('/',function(request,response){
@@ -24,16 +26,30 @@ router.get('/',function(request,response){
   });
 });
 
+router.post('/list',function(request,response){
+    console.log("Download all org Projects request.");
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Projects.find({org:linkedMember.defaultOrg},function(err,orgProjects){
+            response.send(orgProjects);
+        });
+    });
+});
+
 router.post('/add',function(request,response){
   console.log("Add project request: ");
   console.log(request.body);
   var p = new Project(request.body.inputs);
-  Projects.insert(p, function (err, newDoc) {
-    console.log(newDoc);
-    Activities.insert({message:newDoc.name+" was added",type:'projectAdd',link: newDoc._id}, function (err, newDoc) {
-      console.log(newDoc);
-    });
-    response.send({message:"New project added",data:newDoc});
+  Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+      p.org = linkedMember.defaultOrg;
+      Projects.insert(p, function (err, newDoc) {
+        console.log(newDoc);
+        linkedMember.projects.push(newDoc._id);
+        linkedMember.save(function(err){});
+        Activities.insert({message:newDoc.name+" was added",type:'projectAdd',link: newDoc._id,org:linkedMember.defaultOrg,creator:linkedMember._id}, function (err, newDoc) {
+          console.log(newDoc);
+        });
+        response.send({message:"New project added",data:newDoc});
+      });
   });
 });
 

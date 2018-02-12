@@ -2,7 +2,7 @@ var EventCard = function(newData){
     console.log(newData);
     var self = this;
     self.card = col(12).addClass('card').css('margin-top','10px');
-    self.content = div().css('min-height','200px').css('padding-left','5px').css('margin-right','-15px').css('background-color',transparentWhite())
+    self.content = div().css('min-height','200px').css('margin-right','-15px').css('background-color',transparentWhite())
     self.eventNamedImage = div().css(Styles.backgroundImage(newData.icon)).css('background-position','50% 50%').height('100px');
     self.timeIcon = div().text(newData.startTime+' - '+newData.endTime);
     self.locationIcon = div().text(newData.location);

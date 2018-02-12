@@ -9,6 +9,14 @@ function camelCase(str) {
     }).replace(/\s+/g, '');
 }
 
+function split( val ) {
+   return val.split( /,\s*/ );
+ }
+
+function extractLast( term ) {
+    return split( term ).pop();
+}
+
 function syncJSON(i_url,callback) {
     $.ajax({
         type: "GET",

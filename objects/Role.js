@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Roles =  require('./../server/Databases').Roles;
+var Members =  require('./../server/Databases').Members;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Role = function(dataModel){
@@ -13,27 +14,42 @@ var Role = function(dataModel){
     this.resources = [];
     this.label = this.name.toLowerCase();
     this.icon = this.image  || 'public/images/demo/role.jpg';
+    this.org = '';
 };
 
 router.get('/',function(request,response){
   //List all from Dat   abase
-  console.log("Download all Projects request.");
+  console.log("Download all Roles request.");
   Roles.find({}, function (err, docs) {
     response.send(docs);
   });
+});
+
+router.post('/list',function(request,response){
+    console.log("Download all org Roles request.");
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Roles.find({org:linkedMember.defaultOrg},function(err,orgRoles){
+            response.send(orgRoles);
+        });
+    });
 });
 
 router.post('/add',function(request,response){
   console.log("Add role request: ");
   console.log(request.body);
   var r = new Role(request.body.inputs);
-  Roles.insert(r, function (err, newDoc) {
-    console.log(newDoc);
-    Activities.insert({message:newDoc.name+" was added",type:'roleAdd',link: newDoc._id}, function (err, newDoc) {
-      console.log(newDoc);
+  Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+      r.org = linkedMember.defaultOrg;
+      Roles.insert(r, function (err, newDoc) {
+        console.log(newDoc);
+        linkedMember.roles.push(newDoc._id);
+        linkedMember.save(function(err){});
+        Activities.insert({message:newDoc.name+" was added",type:'roleAdd',link:newDoc._id,org:linkedMember.defaultOrg,creator:linkedMember._id}, function (err, newDoc) {
+          console.log(newDoc);
+        });
+        response.send({message:"New role added",data:newDoc});
+      });
     });
-    response.send({message:"New role added",data:newDoc});
-  });
 });
 
 router.post('/find',function(request,response){

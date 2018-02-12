@@ -7,8 +7,6 @@ var ProjectCard = function(newData){
     self.infoRow = row();
     self.membersRow1 = row().css('padding-top','100px').css('color','white');
     $.each(['','','','','','','','','','','',''],function(){self.membersRow1.append(new MemberIconLong('public/images/demo/member.jpg'))});
-    // self.membersRow2 = row().css('padding-top','20px').css('color','white').append(col(1));
-    // $.each(['','','','',''],function(){self.membersRow2.append(new MemberIcon('public/images/demo/member.jpg'))});
     self.name = col(6).append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
     self.desc = col(6).append(highlightTextLight(newData.description).css('font-size','18px').css('margin','0 auto')).removeClass('text-center').addClass('text-right').css('padding-top','15px');
     self.card.append( self.content.append( self.projectNamedImage.append(self.infoRow.append(self.name,self.desc), self.membersRow1 )));
