@@ -183,40 +183,17 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
     this.key = div().css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).addClass('text-left').width('100%');
     var inputType = $('<input>').addClass('button ghost').attr('value',value).css('font-size','18px').css('margin','0');
     var saveClick = function () {
-
+        var SaveData = JSON.parse($('.eastNavi').attr('data-objectdata'));
+        var panelTitle = $('.northNavi').text().replace(/ /g,'').toLowerCase();
         var thisButton = $('body').find(this);
         var parentProp = thisButton.parent().parent();
-        console.log(parentProp);
         var inputVal = parentProp.find('input').val();
-        console.log(inputVal);
-
-        var configSection = $('body').find('.propType').attr('data-index');
         var pathName = parentProp.attr('data-path').substring(1);
-        console.log(pathName);
-
-        var fullPath = '';
-
-        if(pathName){fullPath = (configSection+'.data.'+pathName+'.'+key) }
-        else{ fullPath = (configSection+'.data.'+key) }
-
-        _.set(Config,fullPath.split('.'),inputVal);
-        console.log(Config);
-        var parentTitle = Config[configSection].name;
-        console.log(parentTitle);
-
-        var data = {
-            parentTitle:parentTitle,
-            key:key,
-            newConfig:JSON.stringify(Config),
-            parentIndex:configSection,
-            token:Token
-        };
-        console.log(data);
-        $.post('/settings/update',data,function (response) {
-            console.log(response);
-        });
-        $('body').find(this).parent().parent().replaceWith(new PropertyTall(key,inputVal));
-
+        var fullPath = ( pathName ? (pathName+'.'+key) : (key) );
+        _.set(SaveData,fullPath.split('.'),inputVal);
+        var data = { objectData:SaveData, token:Token };
+        $.post('/'+panelTitle+'/update',data,function (response) { console.log(response); });
+        parentProp.replaceWith(new PropertyTall(key,inputVal));
     };
 
     if(/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(value)){
@@ -224,13 +201,10 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
         saveClick = function(){
             var thisButton = $('body').find(this);
             var parentProp = thisButton.parent().parent();
-            console.log(parentProp);
             var inputVal = parentProp.find('input').get(0).files[0];
-            console.log(inputVal);
             var formData = new FormData();
             formData.append('file',inputVal);
             //formData.append('token',JSON.stringify({token:Token}));
-
             $.ajax({
                 url:'/settings/upload',
                 type: 'POST',
@@ -238,36 +212,19 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
                 processData: false,
                 contentType: false,
                 success:function(data){
-
                     swal.resetDefaults();
                     swal({title:JSON.parse(data).message,type:JSON.parse(data).type});
-
+                    var SaveData = JSON.parse($('.eastNavi').attr('data-objectdata'));
+                    var panelTitle = $('.northNavi').text().replace(/ /g,'').toLowerCase();
                     var inputVal = 'public/uploads/'+JSON.parse(data).filename;
-                    var configSection = $('body').find('.propType').attr('data-index');
-                    var fullPath = '';
-                    if(pathName){fullPath = (configSection+'.data.'+pathName+'.'+key) }
-                    else{ fullPath = (configSection+'.data.'+key) }
-
-                    _.set(Config,fullPath.split('.'),inputVal);
-                    console.log(Config);
-                    var parentTitle = Config[configSection].name;
-
-                    var requestData = {
-                        parentTitle:parentTitle,
-                        key:key,
-                        newConfig:JSON.stringify(Config),
-                        parentIndex:configSection,
-                        token:Token
-                    };
-                    console.log(requestData);
-                    $.post('/settings/update',requestData,function (response) {
-                        console.log(response);
-                    });
+                    var pathName = parentProp.attr('data-path').substring(1);
+                    var fullPath = ( pathName ? (pathName+'.'+key) : (key) );
+                    _.set(SaveData,fullPath.split('.'),inputVal);
+                    var updateData = { objectData:SaveData, token:Token};
+                    $.post('/'+panelTitle+'/update',updateData,function (response) { console.log(response); });
                     parentProp.replaceWith(new PropertyTall(key,inputVal));
-
                 }
             });
-
         }
     }
 
@@ -290,7 +247,7 @@ var isDate = function(date) {
     return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 };
 
-var EditProperty = function(key,value,idNumber,pathName){
+var EditProperty = function(key,value,idNumber,pathName,SaveData){
     this.prop = row().attr('id',idNumber).attr('data-path',pathName);
     this.key = col(3).css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).removeClass('text-center').addClass('text-left');
     var inputType = $('<input>').addClass('button ghost').attr('value',value).css('font-size','18px').css('margin','0');
@@ -311,6 +268,7 @@ var EditProperty = function(key,value,idNumber,pathName){
         if(pathName){fullPath = (configSection+'.data.'+pathName+'.'+key) }
         else{ fullPath = (configSection+'.data.'+key) }
 
+
         _.set(Config,fullPath.split('.'),inputVal);
         console.log(Config);
         var parentTitle = Config[configSection].name;
@@ -324,7 +282,8 @@ var EditProperty = function(key,value,idNumber,pathName){
             token:Token
         };
         console.log(data);
-        $.post('/settings/update',data,function (response) {
+
+        $.post('/'+panelTitle+'/update',data,function (response) {
             console.log(response);
         });
         $('body').find(this).parent().parent().replaceWith(new Property(key,inputVal));

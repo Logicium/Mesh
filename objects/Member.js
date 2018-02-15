@@ -85,11 +85,20 @@ router.post('/activities',function(request,response){
 
 
 router.post('/update',function(request,response){
-    console.log('Update request: '+request._id);
-    Members.update({ id: request._id }, request, {}, function(err, doc) {
-        response.send({message:"Updated successfully."})
+    console.log(request.body);
+    var updateObject = request.body.updateObject;
+    var updateId = updateObject._id;
+    Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Databases.Members.findOne({$and:[{_id:updateId},{orgLink:linkedMember.defaultOrg}]},function(err,doc){
+            console.log(JSON.stringify(doc));
+            doc = updateObject;
+            console.log('Logging doc');
+            doc.save(function (err) {});
+            response.send({message:'Successfully Updated',doc});
+        });
     });
 });
+
 
 router.post('/authenticateMember',function(request,response){
     console.log("Authenticate Member request");
