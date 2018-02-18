@@ -4,7 +4,7 @@ var highlightText = function(text){return $('<span style=\"background: rgba(0,0,
 var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>').css('color','black');};
 var row = function(){return $('<div>').addClass('row').css('margin','0 auto');};
 var col = function(colNum){ return  div().addClass('col-xs-'+colNum).addClass('text-center');};
-var icon = function(icon){return $('<i>').addClass('fa fa-'+icon)};
+var icon = function(icon){return $('<i>').addClass('far fa-'+icon)};
 var panel = function(){return div().addClass('contentPanel animated fadeIn').css('overflow','auto').css('padding','100px').css('padding-top','25px');}
 
 var title = function(htmlText){
@@ -68,6 +68,13 @@ var list = function(array){
     }
     return list;
 };
+
+var addMessageRow = function(){
+    this.addMessageRow = row().css('margin-top','10px').height('100px').css('margin-right','-15px');
+    this.addMessageCol = col(8).css('background-color',transparentWhiteHeavy()).css('padding','0').append(input('Type message:','text').height('100px').css('margin','0'));
+    this.sendButtonCol = buttonCol('Add Message',4).css('padding','0').css('line-height','100px');
+    return this.addMessageRow.append(this.addMessageCol,this.sendButtonCol);
+}
 
 var siteBar = function (name,buttonName,click) {
     buttonName = buttonName || 'Logout';

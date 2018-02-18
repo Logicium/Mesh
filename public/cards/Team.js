@@ -20,6 +20,14 @@ var TeamCard = function(newData){
     self.name = div().append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','25px');
     self.desc = div().append(highlightTextLight(newData.description).css('font-size','18px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','80px');
     self.card.append( self.content.append( self.namedImage.append(self.infoCol.append(self.name,self.desc) , self.membersCol )));
-    self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(newData)); });
+    self.viewFull = div().addClass('animated fadeIn viewFull').css(Styles.click()).css('background-color',transparentBlack()).css({'height':'100%','width':'calc( 100% - 15px )','position':'absolute','z-index':'10'}).append(
+        text('View Full','white','24px').css('letter-spacing','6px').css('text-transform', 'uppercase')
+            .css('font-family','Open Sans Condensed').css({'padding-top':'75px'})
+    ).click(function(){$('.activityPanel').replaceWith(new EventPage(newData));});
+    this.card.click(function(){
+        $('.viewFull').detach();
+        self.card.prepend(self.viewFull);
+        $('.eastNavi').replaceWith(new DetailCard(newData));
+    });
     return self.card;
 };

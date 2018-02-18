@@ -24,8 +24,8 @@ router.get('/imports/cards',function(request,response){
     });
 });
 
-router.get('/imports/details',function(request,response){
-    var basepath = './public/details';
+router.get('/imports/pages',function(request,response){
+    var basepath = './public/pages';
     DirectoryStructureJSON.getStructure(fs, basepath, function (err, structure, total) {
         if (err) console.log(err);
         response.send(structure);

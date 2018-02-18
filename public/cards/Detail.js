@@ -38,6 +38,7 @@ var PrivateDetailCard = function(json){
 };
 
 var DetailCard = function(json){
+    console.log(json);
     var self = this;
     this.card = col(2).addClass('eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
     this.card.attr('data-objectdata',JSON.stringify(json));
@@ -52,7 +53,7 @@ var DetailCard = function(json){
                 if (obj[property] instanceof Array && obj[property].length>0) {
                     var propertyString = property;
                     propertyString = '.'+propertyString;
-                    self.props.append(new ArrayTitle(property,pathName+propertyString,obj[property][0]));
+                    self.props.append(new SimpleArrayTitle(property,pathName+propertyString,obj[property][0]));
                     iterate(obj[property],count,pathName+propertyString);
                 }
                 else if (typeof obj[property] == "object") {

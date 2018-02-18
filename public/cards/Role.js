@@ -9,7 +9,15 @@ var RoleCard = function(newData){
     self.sideA = col(6).css('min-height','150px').css('padding','0').append(self.roleNamedImage);
     self.description = div().append(text(newData.description,'white','16px')).css('padding-top','75px');
     self.sideB = col(6).css('min-height','225px').css('background-color',transparentBlack()).append(self.description);
-    self.card.click(function(){ $('.eastNavi').replaceWith(new DetailCard(newData)); });
+    self.viewFull = div().addClass('animated fadeIn viewFull').css(Styles.click()).css('background-color',transparentBlack()).css({'height':'100%','width':'calc( 100% - 15px )','position':'absolute','z-index':'10'}).append(
+        text('View Full','white','24px').css('letter-spacing','6px').css('text-transform', 'uppercase')
+            .css('font-family','Open Sans Condensed').css({'padding-top':'75px'})
+    ).click(function(){$('.activityPanel').replaceWith(new EventPage(newData));});
+    this.card.click(function(){
+        $('.viewFull').detach();
+        self.card.prepend(self.viewFull);
+        $('.eastNavi').replaceWith(new DetailCard(newData));
+    });
     self.card.append( self.content.append( self.roleRow.append(self.sideA,self.sideB) ));
     return self.card;
 };

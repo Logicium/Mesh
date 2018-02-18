@@ -61,8 +61,8 @@ var Styles = {
     gradientImage:function(obj){
         obj = obj || {};
         return{
-            'background-image': 'linear-gradient(to left,'+obj.c1+', '+obj.c2+'), url('+ obj.image +')',
-            'background-size': crop || 'cover'
+            'background-image': 'linear-gradient(to bottom,'+obj.c1+' 20%, '+obj.c2+'), url('+ obj.image +')',
+            'background-size': 'cover'
         }
     }
 };

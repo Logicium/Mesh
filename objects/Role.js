@@ -60,7 +60,15 @@ router.post('/find',function(request,response){
 });
 
 router.post('/update',function(request,response){
-    //Update
+    console.log(request.body);
+    var updateObject = request.body.objectData;
+    var updateId = updateObject._id;
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Roles.update({$and:[{_id:updateId},{org:linkedMember.defaultOrg}]},updateObject,{},function(err,doc){
+            console.log(JSON.stringify(doc));
+            response.send({message:'Successfully Updated',doc:doc});
+        });
+    });
 });
 
 router.post('/delete',function(request,response){

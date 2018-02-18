@@ -88,8 +88,8 @@ router.post('/update',function(request,response){
     console.log(request.body);
     var updateObject = request.body.updateObject;
     var updateId = updateObject._id;
-    Databases.Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Databases.Members.findOne({$and:[{_id:updateId},{orgLink:linkedMember.defaultOrg}]},function(err,doc){
+    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+        Members.findOne({$and:[{_id:updateId},{orgLink:linkedMember.defaultOrg}]},function(err,doc){
             console.log(JSON.stringify(doc));
             doc = updateObject;
             console.log('Logging doc');

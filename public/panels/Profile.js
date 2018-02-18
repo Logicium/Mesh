@@ -33,8 +33,8 @@ var ProfilePanel = function(name){
     });
 
     this.addMessageRow = row().css('margin-top','10px').height('100px').css('margin-right','-15px');
-    this.addMessageCol = col(8).css('background-color',transparentWhiteHeavy()).css('padding','0').append(input('Type message:','text').height('100px').css('margin','0'));
-    this.sendButtonCol = buttonCol('Add Comment',4).css('padding','0').css('line-height','100px')
+    this.addMessageCol = col(9).css('background-color',transparentWhiteHeavy()).css('padding','0').append(input('Type message:','text').height('100px').css('margin','0'));
+    this.sendButtonCol = buttonCol('Add Comment',3).css('padding','0').css('line-height','100px')
 
     this.activityRow = div().addClass('cards').css('margin-right','-15px');
 

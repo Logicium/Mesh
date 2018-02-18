@@ -1,6 +1,6 @@
-2018/02/15-12:33:31.718 217c Recovering log #70
-2018/02/15-12:33:31.728 217c Level-0 table #72: started
-2018/02/15-12:33:31.785 217c Level-0 table #72: 236 bytes OK
-2018/02/15-12:33:31.888 217c Delete type=0 #70
-2018/02/15-12:33:31.890 217c Delete type=3 #68
-2018/02/15-12:33:31.988 13f0 Moved #64 to level-1 236 bytes OK: files[ 3 16 0 0 0 0 0 ]
+2018/02/16-02:39:16.202 532c Recovering log #76
+2018/02/16-02:39:16.217 532c Level-0 table #78: started
+2018/02/16-02:39:16.280 532c Level-0 table #78: 236 bytes OK
+2018/02/16-02:39:16.491 532c Delete type=0 #76
+2018/02/16-02:39:16.492 532c Delete type=3 #74
+2018/02/16-02:39:16.523 2058 Moved #69 to level-1 236 bytes OK: files[ 3 18 0 0 0 0 0 ]
