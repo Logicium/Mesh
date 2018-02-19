@@ -33,7 +33,3 @@ var EventPage = function(EventData){
 
     );
 };
-var MemberIconWide = function(image){
-    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto', 'margin-top':'10px','margin-bottom':'5px'}
-    return col(3).append( div().css(Styles.backgroundImage(image)).css(css).height('45px').width('45px') );
-}

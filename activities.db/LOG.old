@@ -1,5 +1,5 @@
-2018/02/15-14:27:10.127 c1c Recovering log #140
-2018/02/15-14:27:10.127 c1c Level-0 table #142: started
-2018/02/15-14:27:10.222 c1c Level-0 table #142: 289 bytes OK
-2018/02/15-14:27:10.415 c1c Delete type=0 #140
-2018/02/15-14:27:10.416 c1c Delete type=3 #138
+2018/02/18-20:27:26.653 80ec Recovering log #175
+2018/02/18-20:27:26.655 80ec Level-0 table #178: started
+2018/02/18-20:27:26.716 80ec Level-0 table #178: 289 bytes OK
+2018/02/18-20:27:26.922 80ec Delete type=0 #175
+2018/02/18-20:27:26.926 80ec Delete type=3 #173

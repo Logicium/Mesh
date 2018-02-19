@@ -4,12 +4,17 @@ var highlightText = function(text){return $('<span style=\"background: rgba(0,0,
 var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>').css('color','black');};
 var row = function(){return $('<div>').addClass('row').css('margin','0 auto');};
 var col = function(colNum){ return  div().addClass('col-xs-'+colNum).addClass('text-center');};
-var icon = function(icon){return $('<i>').addClass('far fa-'+icon)};
+var icon = function(icon){return $('<i>').addClass('far fas fa-'+icon)};
 var panel = function(){return div().addClass('contentPanel animated fadeIn').css('overflow','auto').css('padding','100px').css('padding-top','25px');}
 
 var title = function(htmlText){
     return div().css('letter-spacing','12px').html(htmlText)
         .css('padding-top','25px').css('padding-left','25px').css('color','white').css('font-size','40px').css('font-family','Open Sans Condensed');
+};
+
+var titleSm = function(htmlText){
+    return div().css('letter-spacing','8px').html(htmlText)
+        .css('padding-top','15px').css('padding-left','15px').css('color','black').css('font-size','28px').css('font-family','Open Sans Condensed');
 };
 
 var subtitle = function (htmlText) {
@@ -75,6 +80,55 @@ var addMessageRow = function(){
     this.sendButtonCol = buttonCol('Add Message',4).css('padding','0').css('line-height','100px');
     return this.addMessageRow.append(this.addMessageCol,this.sendButtonCol);
 }
+
+var MemberIcon = function(image){
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
+    return col(2).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
+}
+
+var MemberIconMed = function(image){
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
+    return col(3).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
+}
+
+var MemberIconLg = function(image){
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
+    return col(2).append( div().css(Styles.backgroundImage(image)).css(css).height('45px').width('45px') );
+}
+
+var MemberIconWide = function(image){
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto', 'margin-top':'10px','margin-bottom':'5px'}
+    return col(3).append( div().css(Styles.backgroundImage(image)).css(css).height('45px').width('45px') );
+}
+
+var roundIconSm = function(iconName){
+    this.button = div().css('margin','10px');
+    this.round = div().height('45px').width('45px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto','line-height':'45px'});
+    this.icon = icon(iconName).css({'color':'white','font-size':'18px'});
+    return this.button.append(
+        this.round.append(this.icon),
+    );
+};
+
+var roundIconButton = function(iconName){
+    this.button = div().height('120px').css('padding','10px');
+    this.round = div().height('50px').width('50px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto','line-height':'50px'});
+    this.icon = icon(iconName).css({'color':'white','font-size':'20px'});
+    return this.button.append(
+        this.round.append(this.icon),
+    );
+};
+
+var roundValueButton = function(name,value){
+    this.button = col(2).height('120px').addClass('hvr hvr-underline-reveal').css('padding','10px');
+    this.round = div().height('50px').width('50px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto'});
+    this.value = text(value,'white','20px').css({'line-height':'50px'});;
+    this.name = text(name,'white','20px').css('font-family','Open Sans Condensed').css('margin-top','25px').css('letter-spacing','6px').css('text-transform', 'uppercase');
+    return this.button.append(
+        this.round.append(this.value),
+        this.name
+    );
+};
 
 var siteBar = function (name,buttonName,click) {
     buttonName = buttonName || 'Logout';

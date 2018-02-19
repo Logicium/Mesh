@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Messages =  require('./../server/Databases').Messages;
+var Conversations =  require('./../server/Databases').Conversations;
 var Members =  require('./../server/Databases').Members;
 
 var Message = function(dataModel){
@@ -31,12 +32,20 @@ router.post('/list',function(request,response){
 router.post('/add',function(request,response){
   console.log("Add message request: ");
   console.log(request.body);
-  var m = new Message(request.body);
+  var m = (request.body.message);
   Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
       m.org = linkedMember.defaultOrg;
+      m.from = linkedMember._id;
+      var d = new Date();
+      m.time = d.toLocaleString();
       Messages.insert(m, function (err, newDoc) {
         console.log(newDoc);
-        response.send({message:"New message added!",data:newDoc});
+        Conversations.findOne({'_id':m.conversation}, function (err, doc) {
+           if(doc.messages){ doc.messages.push(newDoc._id); }
+           else{doc.messages = []; doc.messages.push(newDoc._id); }
+           doc.save(function(err){});
+           response.send({message:"New message added!",data:newDoc});
+        });
       });
   });
 });

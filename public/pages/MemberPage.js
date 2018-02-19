@@ -66,25 +66,3 @@ var MemberPage = function(MemberData){
     );
 
 }
-
-var roundIconButton = function(iconName){
-    this.button = div().height('120px').css('padding','10px');
-    this.round = div().height('50px').width('50px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto','line-height':'50px'});
-    this.icon = icon(iconName).css({'color':'white','font-size':'20px'});
-    //this.name = text(name,'white','20px').css('font-family','Open Sans Condensed').css('margin-top','10px').css('letter-spacing','6px').css('text-transform', 'uppercase');
-    return this.button.append(
-        this.round.append(this.icon),
-        //this.name
-    );
-};
-
-var roundValueButton = function(name,value){
-    this.button = col(2).height('120px').addClass('hvr hvr-underline-reveal').css('padding','10px');
-    this.round = div().height('50px').width('50px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto'});
-    this.value = text(value,'white','20px').css({'line-height':'50px'});;
-    this.name = text(name,'white','20px').css('font-family','Open Sans Condensed').css('margin-top','25px').css('letter-spacing','6px').css('text-transform', 'uppercase');
-    return this.button.append(
-        this.round.append(this.value),
-        this.name
-    );
-};

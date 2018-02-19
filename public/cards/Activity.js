@@ -68,11 +68,6 @@ var EventActivityCard = function(self,data){
   return self.card;
 };
 
-var MemberIcon = function(image){
-    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
-    return col(2).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
-}
-
 var ProjectActivityCard = function(self,data){
   self.card = div().addClass('card').css('margin-right','-15px').css('margin-bottom','15px');
   postJSON('/projects/find',{"_id":data.link},function(newData){

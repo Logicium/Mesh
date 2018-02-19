@@ -1,14 +1,15 @@
+
 var Navi = function(){
     this.naviPanel = $('<div>').addClass('naviPanel');
     this.homeBox = $('<div>').addClass('homeBox');
     this.utilitiesSelection = $('<div>').addClass('utilitiesSelection').width('100%');
     this.utilitiesList = [
         {name:'Activity',icon:'rss'},
-        {name:'Messages',icon:'comments-o'},
+        {name:'Messages',icon:'comments'},
         {name:'Members',icon:'users'},
         {name:'Events',icon:'calendar'},
         {name:'Projects',icon:'cubes'},
-        {name:'Teams',icon:'institution'},
+        {name:'Teams',icon:'university'},
         {name:'Roles',icon:'briefcase'},
         {name:'Tasks',icon:'tasks'},
         {name:'Profile',icon:'user'},
@@ -55,7 +56,7 @@ UtilitySelectionCard.prototype = {
 
     clickedActivity:function(name){
         if(name=="Activity"){return new Activity().assemble()}
-        else if(name=="Messages"){return new Messages().assemble()}
+        else if(name=="Messages"){return new Conversations()}
         else if(name=="Members"){return new Members().assemble()}
         else if(name=="Events"){return new Events().assemble()}
         else if(name=="Projects"){return new Projects().assemble()}

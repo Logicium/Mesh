@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Messages =  require('./../server/Databases').Messages;
-var Conversations =  require('./../server/Databases').Conversation;
+var Conversations =  require('./../server/Databases').Conversations;
 var Members =  require('./../server/Databases').Members;
 
 var Conversation = function(dataModel){
@@ -21,7 +21,7 @@ router.get('/',function(request,response){
 });
 
 router.post('/list',function(request,response){
-    console.log("Download all user Messages request.");
+    console.log("Download all user Convos request.");
     Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
         Conversations.find({$and:[{members:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
             response.send(orgMessages);
@@ -30,14 +30,16 @@ router.post('/list',function(request,response){
 });
 
 router.post('/add',function(request,response){
-  console.log("Add message request: ");
+  console.log("Add convo request: ");
   console.log(request.body);
-  var c = new Conversation(request.body);
+  var c = (request.body.convo);
   Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-      m.org = linkedMember.defaultOrg;
-      Conversations.insert(m, function (err, newDoc) {
+      c.org = linkedMember.defaultOrg;
+      c.creator = linkedMember._id;
+      c.members = []; c.members.push(c.creator);
+      Conversations.insert(c, function (err, newDoc) {
         console.log(newDoc);
-        response.send({message:"New message added!",data:newDoc});
+        response.send({message:"New convo added!",data:newDoc});
       });
   });
 });
