@@ -28,6 +28,7 @@ var Team = require('./objects/Team.js');
 var Project = require('./objects/Project.js');
 var Role = require('./objects/Role.js');
 
+app.set('port', (process.env.PORT || 5000));
 app.use('/members',Member);
 app.use('/activity',Activity);
 app.use('/events',Event);
@@ -38,7 +39,7 @@ app.use('/tasks',Task);
 app.use('/projects',Project);
 app.use('/roles',Role);
 
-var server = app.listen(2101, function () {
+var server = app.listen(app.get('port'), function () {
     var port = server.address().port;
     console.log("Example app listening at http://localhost:%s", port);
 });
