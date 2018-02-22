@@ -12,12 +12,12 @@ var MemberPage = function(MemberData){
     self.memberImage = div().height('350px').width('350px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto'}).css('background-position','50% 70%').css(Styles.backgroundImage(MemberData.icon));
 
     self.statsRow = row();
-    self.activitiesStat = new roundValueButton('Activities',MemberData.activity.length);
-    self.rolesStat = new roundValueButton('Roles',MemberData.roles.length);
-    self.projectsStat = new roundValueButton('Projects',MemberData.projects.length);
-    self.eventsStat = new roundValueButton('Events',MemberData.events.length);
-    self.teamsStat = new roundValueButton('Teams',MemberData.teams.length);
-    self.tasksStat = new roundValueButton('Tasks',MemberData.tasks.length);
+    self.activitiesStat = new roundValueButton('Activities',(MemberData.activity ? MemberData.activity.length : '0' ));
+    self.rolesStat = new roundValueButton('Roles',(MemberData.roles ? MemberData.roles.length : '0' ));
+    self.projectsStat = new roundValueButton('Projects',(MemberData.projects ? MemberData.projects.length : '0' ));
+    self.eventsStat = new roundValueButton('Events',(MemberData.events ? MemberData.events.length : '0' ));
+    self.teamsStat = new roundValueButton('Teams',(MemberData.teams ? MemberData.teams.length : '0' ));
+    self.tasksStat = new roundValueButton('Tasks',(MemberData.tasks ? MemberData.tasks.length : '0' ));
 
     self.utilRow = row();
     self.activityCol = col(8).css({'background-color':transparentWhiteHeavy()});
@@ -38,9 +38,29 @@ var MemberPage = function(MemberData){
     self.commentsCol = col(4).css({'background-color':transparentBlack()});
     self.addCommentRow = row();
     self.addCommentInputCol = col(8);
-    self.addCommentInput = input('Add Comment','text').addClass('inputWhite');
-    self.addCommentSend = buttonCol('Post',4).css({'margin-top':'10px','height':'45px','line-height':'45px'});
-    self.commentsCards = row();
+    self.commentCards = row();
+    self.addCommentInput = input('Add Comment','text').addClass('sendMessageInput inputWhite');
+    self.addCommentSend = buttonCol('Post',4).css({'margin-top':'10px','height':'45px','line-height':'45px'}).click(function(){
+        var newMessage = {message:$('.sendMessageInput').val(),member:MemberData._id};
+        $('.sendMessageInput').val('');
+        postJSON('/messages/addComment',{token:Token,message:newMessage},function(messageData){
+            if( MemberData.publicMessages ) { MemberData.publicMessages.push(messageData.data._id) }
+            else{ MemberData.publicMessages = []; MemberData.publicMessages.push(messageData.data._id) };
+            postJSON('/members/update',{token:Token,updateObject:MemberData},function(updatedMember){console.log(updatedMember)});
+            postJSON('/members/find',{_id:messageData.data.from},function(memberData){
+                self.commentCards.prepend(new MessageCard(messageData.data,memberData[0]));
+            });
+        });
+    });
+
+    $.each(MemberData.publicMessages,function(){
+        postJSON('/messages/find',{_id:this},function(MessageData){
+            postJSON('/members/find',{_id:MessageData[0].from},function(memberData){
+                self.commentCards.prepend(new MessageCard(MessageData[0],memberData[0]));
+            });
+        });
+    });
+
 
     return self.page.append(
         self.header.append(
@@ -60,7 +80,7 @@ var MemberPage = function(MemberData){
             ),
             self.commentsCol.append(
                 self.addCommentRow.append(self.addCommentInputCol.append(self.addCommentInput),self.addCommentSend),
-                self.commentsCards
+                self.commentCards
             )
         )
     );

@@ -1,7 +1,10 @@
 var express = require('express');
+var fs = require('fs');
+var path = require('path');
 var router = express.Router();
 var Members = require('./../server/Databases').Members;
 var Activities = require('./../server/Databases.js').Activities;
+var Databases = require('./../server/Databases');
 
 var Member = function(DataModel){
     this.firstName = DataModel[0]+'';
@@ -53,12 +56,28 @@ router.post('/add',function(request,response){
         m.orgs.push(linkedMember.defaultOrg);
         Members.insert(m, function (err, newDoc) {
             console.log(newDoc);
-            response.send({message:"New member added",data:newDoc});
+
+            var Config = fs.readFile(path.join(__dirname, './../public/libraries/Config.json'),'utf8',function (err,data) {
+                if (err) throw err;
+                data = JSON.parse(data);
+                console.log(data);
+                for(var i=0;i<data.length;i++){
+                    data[i].memberLink = newDoc._id;
+                    data[i].orgLink = linkedMember.defaultOrg;
+                    Databases.Settings.insert(data[i], function (err, newDoc) {
+                        console.log(newDoc);
+                        console.log('Settings file initialized');
+                    });
+                }
+            });
+
             Activities.insert(
               {message:newDoc.fullName+" was added",type:'memberAdd',link: newDoc._id,org:linkedMember.defaultOrg,creator:linkedMember._id},
               function (err, newDoc) {
               console.log(newDoc);
             });
+
+            response.send({message:"New member added",data:newDoc});
         });
     });
 
@@ -89,12 +108,10 @@ router.post('/update',function(request,response){
     var updateObject = request.body.updateObject;
     var updateId = updateObject._id;
     Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Members.findOne({$and:[{_id:updateId},{orgLink:linkedMember.defaultOrg}]},function(err,doc){
+        Members.update({_id:updateId},updateObject,{},function(err,doc){
             console.log(JSON.stringify(doc));
-            doc = updateObject;
             console.log('Logging doc');
-            doc.save(function (err) {});
-            response.send({message:'Successfully Updated',doc});
+            response.send({message:'Successfully Updated',doc:doc});
         });
     });
 });

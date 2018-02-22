@@ -1,5 +1,5 @@
-2018/02/18-20:27:26.653 80ec Recovering log #175
-2018/02/18-20:27:26.655 80ec Level-0 table #178: started
-2018/02/18-20:27:26.716 80ec Level-0 table #178: 289 bytes OK
-2018/02/18-20:27:26.922 80ec Delete type=0 #175
-2018/02/18-20:27:26.926 80ec Delete type=3 #173
+2018/02/21-16:06:11.703 233c Recovering log #214
+2018/02/21-16:06:11.703 233c Level-0 table #217: started
+2018/02/21-16:06:11.743 233c Level-0 table #217: 289 bytes OK
+2018/02/21-16:06:11.824 233c Delete type=0 #214
+2018/02/21-16:06:11.825 233c Delete type=3 #212

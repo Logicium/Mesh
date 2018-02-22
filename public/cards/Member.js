@@ -8,10 +8,10 @@ var MemberCard = function(newData){
     self.name = highlightText(newData.fullName).css('font-size','20px').css('margin-bottom','15px');
 
     self.statsRow = row().append(
-      new Stat('Roles',newData.roles.length),
-      new Stat('Teams',newData.teams.length),
-      new Stat('Projects',newData.projects.length),
-      new Stat('Events',newData.events.length)
+      new Stat('Roles',(newData.roles ? newData.roles.length : '0' )),
+      new Stat('Teams',(newData.teams ? newData.teams.length : '0' )),
+      new Stat('Projects',(newData.projects ? newData.projects.length : '0' )),
+      new Stat('Events',(newData.events ? newData.events.length : '0' ))
     );
 
     self.viewFull = div().addClass('animated fadeIn viewFull').css(Styles.click()).css('background-color',transparentBlack()).css({'height':'100%','width':'calc( 100% - 15px )','position':'absolute','z-index':'10'}).append(

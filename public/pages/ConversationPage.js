@@ -45,7 +45,7 @@ var ConversationSection = function(name,iconName,convos){
     this.icon = col(2).append(div().append(icon(iconName)).css('margin','0 auto').css('padding','10px'));
     this.title = col(8).append(text(name,'black','18px').css({'letter-spacing':'6px','line-height':'50px'}).css('text-transform', 'uppercase').css('font-family','Open Sans Condensed'));
     self.messagesRow = row().css({'border-bottom-left-radius':'5px','border-bottom-right-radius':'5px','min-height':'200px','margin-bottom':'15px','background-color':transparentWhite()});
-    $.each(convos,function(){self.messagesRow.append(new ConversationPreviewCard(this, (this.messages ? this.messages[0] : {} ) ))});
+    $.each(convos,function(){self.messagesRow.append(new ConversationPreviewCard(this, (this.messages ? this.messages[this.messages.length-1] : {} ) ))});
 
     return this.section.append(this.titleBar.append(this.icon,this.title),self.messagesRow);
 };
@@ -54,18 +54,18 @@ var ConversationPreviewCard = function(ConversationData,MessageId){
     var self = this;
     var MemberData = {};
     var MessageData = {};
-    postJSON('/messages/find',{_id:MessageId,token:Token},function(message){ MessageData = message });
+    postJSON('/messages/find',{_id:MessageId,token:Token},function(message){ MessageData = message[0] });
     postJSON('/members/find',{_id:MessageData.from},function(member){ MemberData = member[0];});
 
-    self.card = row().click(function(){
+    self.card = row()
+    self.textCol = col(6).removeClass('text-center').addClass('text-left').click(function(){
         $('.messagesPanel').replaceWith(new MessagesPanel(ConversationData,ConversationData.messages));
     });
-    self.textCol = col(6).removeClass('text-center').addClass('text-left');
     self.oppositeImageCol = col(3);
-    self.image = new MemberIconWide(MemberData.icon);
+    self.image = new MemberIconWide(MemberData.icon).click(function(){ $('.eastNavi').replaceWith(new PrivateDetailCard(MemberData));});
     self.subject = text(ConversationData.name,'black','16px');
     self.fullName = text(MemberData.fullName,'black','16px').css('font-weight','500');
-    self.messageText = text(MessageData.message,'black','14px');
+    self.messagePreview = text(MessageData.message,'black','14px');
     self.time = text(MessageData.time,'grey','12px');
 
     return self.card.append(

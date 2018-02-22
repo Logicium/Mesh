@@ -5,7 +5,7 @@
 var PrivateDetailCard = function(json){
     var self = this;
     this.card = col(2).addClass('eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
-    this.props = div().css('padding','25px').height('100vh').css('overflow-y','scroll');
+    this.props = div().css('padding','15px').height('100vh').css('overflow-y','scroll');
     var pathName = '';
     iterate(json,0,pathName);
     function iterate(obj,count,pathName) {
@@ -34,7 +34,11 @@ var PrivateDetailCard = function(json){
         }
     }
 
-    return this.card.append(this.props);
+    this.image = div().css(Styles.backgroundImage(json.icon)).css({'width':'100%','height':'300px'});
+    this.title = titleSm(json.fullName || json.name).css('font-weight','500').css('color','white');
+    if(json.icon){ return this.card.append(this.props.prepend(this.image,this.title)); }
+    else{ return this.card.append(this.props); }
+
 };
 
 var DetailCard = function(json){
@@ -42,7 +46,7 @@ var DetailCard = function(json){
     var self = this;
     this.card = col(2).addClass('eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
     this.card.attr('data-objectdata',JSON.stringify(json));
-    this.props = div().css('padding','25px').height('100vh').css('overflow-y','scroll');
+    this.props = div().css('padding','15px').height('100vh').css('overflow-y','scroll');
     var pathName = '';
     iterate(json,0,pathName);
     function iterate(obj,count,pathName) {
@@ -71,5 +75,9 @@ var DetailCard = function(json){
         }
     }
     this.card.resizable();
-    return this.card.append(this.props);
+    this.image = div().css(Styles.backgroundImage(json.icon)).css({'width':'100%','height':'300px'});
+    this.title = titleSm(json.fullName || json.name).css('font-weight','500').css('color','white');
+    if(json.icon){ return this.card.append(this.props.prepend(this.image,this.title)); }
+    else{ return this.card.append(this.props); }
+
 };

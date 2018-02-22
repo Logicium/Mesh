@@ -2,15 +2,15 @@ var express = require('express');
 var router = express.Router();
 var Messages =  require('./../server/Databases').Messages;
 var Conversations =  require('./../server/Databases').Conversations;
+var Statuses =  require('./../server/Databases').Statuses;
 var Members =  require('./../server/Databases').Members;
 
-var Conversation = function(dataModel){
-    this.from = dataModel[0]+'';
-    this.members = dataModel[1];
-    this.teams = dataModel[2];
-    this.message = dataModel[3]+'';
-    this.media = dataModel[4]+'';
-    this.org = '';
+var Status = function(){
+    this.member = ''//creator id
+    this.message = ''//id
+    this.conversation = ''//id
+    this.type  = '';//unread,read,archived
+    this.org = '';//creator org id
 };
 
 //Find all organization messages, then find all messages that belong to that user.
@@ -24,15 +24,6 @@ router.post('/list',function(request,response){
     console.log("Download all user Convos request.");
     Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
         Conversations.find({$and:[{members:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
-            response.send(orgMessages);
-        });
-    });
-});
-
-router.post('/listType',function(request,response){
-    console.log("Download all user Convos request.");
-    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Statuses.find({$and:[{members:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
             response.send(orgMessages);
         });
     });
@@ -55,7 +46,7 @@ router.post('/add',function(request,response){
 
 router.post('/find',function(request,response){
     console.log("Finding one: "+request.body._id);
-    Messages.find({'_id':request.body._id}, function (err, docs) {
+    Statuses.find({'_id':request.body._id}, function (err, docs) {
         response.send(docs);
     });
 });

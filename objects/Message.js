@@ -21,9 +21,9 @@ router.get('/',function(request,response){
 });
 
 router.post('/list',function(request,response){
-    console.log("Download all user Messages request.");
-    Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
-        Messages.find({$and:[{members:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
+    console.log("Download all public member Messages request.");
+    Members.findOne({_id:request.body._id}, function (err, linkedMember) {
+        Messages.find({$and:[{member:linkedMember._id},{org:linkedMember.defaultOrg}]},function(err,orgMessages){
             response.send(orgMessages);
         });
     });
@@ -44,8 +44,24 @@ router.post('/add',function(request,response){
            if(doc.messages){ doc.messages.push(newDoc._id); }
            else{doc.messages = []; doc.messages.push(newDoc._id); }
            doc.save(function(err){});
-           response.send({message:"New message added!",data:newDoc});
         });
+        response.send({message:"New message added!",data:newDoc});
+      });
+  });
+});
+
+router.post('/addComment',function(request,response){
+  console.log("Add message request: ");
+  console.log(request.body);
+  var m = (request.body.message);
+  Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
+      m.org = linkedMember.defaultOrg;
+      m.from = linkedMember._id;
+      var d = new Date();
+      m.time = d.toLocaleString();
+      Messages.insert(m, function (err, newDoc) {
+        console.log(newDoc);
+        response.send({message:"New message added!",data:newDoc});
       });
   });
 });
