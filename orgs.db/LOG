@@ -1,6 +1,0 @@
-2018/02/21-23:02:17.220 4de4 Recovering log #148
-2018/02/21-23:02:17.220 4de4 Level-0 table #150: started
-2018/02/21-23:02:17.305 4de4 Level-0 table #150: 236 bytes OK
-2018/02/21-23:02:17.390 4de4 Delete type=0 #148
-2018/02/21-23:02:17.391 4de4 Delete type=3 #146
-2018/02/21-23:02:17.453 4874 Moved #150 to level-1 236 bytes OK: files[ 3 42 0 0 0 0 0 ]
