@@ -1,4 +1,6 @@
 /.idea
+/convos.db
+/statuses.db
 /activities.db
 /events.db
 /members.db
