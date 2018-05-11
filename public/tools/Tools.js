@@ -38,14 +38,15 @@ var LinkedData = function(){
 
 var InputForm = function(inputs,toolData){
   var linkedData = new LinkedData();
-  this.inputPanel = div().addClass('toolPanel col-xs-8 animated fadeInUp').css('width','calc(100% - 15px)').css('margin-left','15px').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
-  this.inputPanel.css('height','100%');
-  this.inputPanel.css('background','rgba(246, 246, 246, 0.31)');
+  $('.toolPanel').remove();
+  this.inputPanel = div().addClass('toolPanel col-xs-8 animated fadeInUp').css('width','calc(100% - 15px)').css('margin-left','15px').css('padding-left','15px').css('padding-right','15px');
+  this.inputPanel.css('background',transparentWhite()).css({'position':'absolute','z-index':'10'});
   this.inputForm = div().addClass("inputForm");
+  $('.cards').css('filter','blur(10px)');
   var self2 = this;
   $.each(inputs,function(inputName){
       inputName = this;
-      var newInput = input(this).addClass('name-form delay-1 animated fadeInUp text-center');
+      var newInput = input(this).addClass('name-form inputWhite delay-1 animated fadeIn text-center');
       $.each(linkedData.Members.keys,function(){
           if(this.toString()==inputName.toLowerCase()){
               $(newInput).autocomplete({
@@ -192,12 +193,12 @@ var InputForm = function(inputs,toolData){
           }
       });
   });
-  console.log(toolData);
-  toolData.push({name:"Send",icon:'arrow-right'});
-  console.log(toolData);
-  $.each($('.toolCard'),function(){if($(this).find('.toolName').text() == "Send"){$(this).remove()}});
-  $('.toolBar').replaceWith(new ToolBar(toolData).assemble());
 
+  $.each($('.toolCard'),function(){if($(this).find('.sendTool')){$(this).remove()}});
+  this.submitRow = row().css('margin-bottom','10px').append(
+    buttonCol( 'Submit',12 ).addClass('nameBox').prepend(span().css('padding-right','15px').append(icon('arrow-right')))
+  ).click(function(){ var formInputs = getAllValues('.toolPanel');$('.cardPanel').prepend(new Send(formInputs));});
+  this.inputPanel.append(this.submitRow);
 };
 InputForm.prototype = {
     assemble: function () {
@@ -213,23 +214,19 @@ var autocompleteCard = function(body,item){
     return this.card;
 }
 
-var Send = function(){
+var Send = function(formInputs){
+    $('.toolPanel').remove();
     this.sendPanel = div().addClass('toolPanel col-xs-8 text-center animated fadeInUp').css('padding-left','15px').css('padding-right','15px').css('margin-top','15px');
-    this.sendPanel.css('height','100%').css('width','calc(100% - 15px)').css('margin-left','15px');
+    this.sendPanel.css('width','calc(100% - 15px)').css('margin-left','15px').css({'position':'absolute','z-index':'10'});;
     this.sendPanel.css('background','rgba(246, 246, 246, 0.31)');
-};
-
-Send.prototype = {
-    assemble: function(formInputs){
-      var routeBase = $('.topTitle').text().replace(/ /g,'').toLowerCase();
-      var self = this;
-      self.sendMessage = div().addClass("sendPanel").text("Message sent!");
-      $.post('http://localhost:2101/'+routeBase+'/add',{token:Token,inputs:formInputs},function(data){
-        console.log(data);
-        $('.sendPanel').text(data.message);
-      });
-      return $(self.sendPanel).append(self.sendMessage);
-    }
+    var routeBase = $('.topTitle').text().replace(/ /g,'').toLowerCase();
+    var self = this;
+    this.sendMessage = div().addClass("sendPanel").text("Message sent!");
+    $.post(''+routeBase+'/add',{token:Token,inputs:formInputs},function(data){
+      console.log(data);
+      $('.sendPanel').text(data.message);
+    });
+    return $(self.sendPanel).append(self.sendMessage);
 };
 
 var Delete = function(){

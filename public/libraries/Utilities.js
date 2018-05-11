@@ -16,6 +16,35 @@ function split( val ) {
 function extractLast( term ) {
     return split( term ).pop();
 }
+function setColSize(length){
+  var size = 12;
+  if(length==1){size=12}
+  else if(length==2){size=6}
+  else if(length==3){size=4}
+  else if(length==4){size=3}
+  else if(length==5){size=2}
+  else if(length==6){size=2}
+  else {size == 1 }
+  return size;
+}
+
+function getAllValues(element){
+    var inputValues = [];
+    var datum = {};
+    $(element).find('input').each(function () {
+        var type = $(this).attr("type");
+        datum = {};
+        if ((type == "checkbox" || type == "radio") && this.checked) {
+            datum[$(this).next('label').find('span').text().toLowerCase()] = $(this).val();
+            inputValues.push(JSON.parse(JSON.stringify(datum)));
+        }
+        else if (type != "button" || type != "submit") {
+            datum[$(this).next('label').find('span').text().toLowerCase()] = $(this).val();
+            inputValues.push(JSON.parse(JSON.stringify(datum)));
+        }
+    });
+    return inputValues;
+}
 
 function syncJSON(i_url,callback) {
     $.ajax({

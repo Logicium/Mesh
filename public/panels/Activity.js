@@ -24,7 +24,7 @@ var ActivityPanel = function(name){
     this.newMembers = col(4).append(this.newMemberName,this.newMemberContent);
     this.feed = col(8).addClass('feed');
     var self = this;
-    $.post('http://localhost:2101/'+self.name+'/list',{token:Token},function(data){
+    $.post(''+self.name+'/list',{token:Token},function(data){
         console.log(data);
       $.each(data,function(){
           if(this.type != 'memberAdd'){ $(self.feed).append(new ActivityCard(this)); }

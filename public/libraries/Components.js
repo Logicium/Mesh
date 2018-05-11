@@ -1,4 +1,5 @@
 var div = function(){return $('<div>')};
+var span = function(){return $('<span>')};
 var text = function(string,color,size){return div().text(string).css('color',color).css('font-size',size);};
 var highlightText = function(text){return $('<span style=\"background: rgba(0,0,0,0.71);\">&nbsp;'+text+'&nbsp;</span>').css('color','white');};
 var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>').css('color','black');};
@@ -102,8 +103,8 @@ var MemberIconWide = function(image){
 }
 
 var roundIconSm = function(iconName){
-    this.button = div().css('margin','10px');
-    this.round = div().height('45px').width('45px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto','line-height':'45px'});
+    this.button = div().css('margin','10px').css(Styles.click());
+    this.round = div().height('40px').width('40px').css({'border':'2px solid white','border-radius':'50%','margin':'0 auto','line-height':'40px'});
     this.icon = icon(iconName).css({'color':'white','font-size':'18px'});
     return this.button.append(
         this.round.append(this.icon),

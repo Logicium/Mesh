@@ -4,7 +4,7 @@
 
 var PrivateDetailCard = function(json){
     var self = this;
-    this.card = col(2).addClass('eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
+    this.card = col(2).addClass('animated fadeInRight eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
     this.props = div().css('padding','15px').height('100vh').css('overflow-y','scroll');
     var pathName = '';
     iterate(json,0,pathName);
@@ -44,7 +44,7 @@ var PrivateDetailCard = function(json){
 var DetailCard = function(json){
     console.log(json);
     var self = this;
-    this.card = col(2).addClass('eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
+    this.card = col(2).addClass('animated fadeInRight eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
     this.card.attr('data-objectdata',JSON.stringify(json));
     this.props = div().css('padding','15px').height('100vh').css('overflow-y','scroll');
     var pathName = '';

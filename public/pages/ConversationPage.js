@@ -1,6 +1,7 @@
 var ConversationsPanel = function(){
     var ConversationsData = {};
     postJSON('/conversations/list',{token:Token},function(newData){ConversationsData = newData});
+    console.log(ConversationsData);
     var self = this;
     self.page = col(8).addClass('activityPanel').height('100vh');
 
@@ -15,7 +16,7 @@ var ConversationsPanel = function(){
         });
     });
     self.inputCol = col(9);
-    self.searchInput = input('Search','text');
+    self.searchInput = input('Search','text').addClass('inputWhite').css('background-color',transparentWhite());
 
     self.unreadSection = new ConversationSection('Unread','envelope',ConversationsData);
     self.snoozedSection = new ConversationSection('Snoozed','clock',ConversationsData);
@@ -54,8 +55,12 @@ var ConversationPreviewCard = function(ConversationData,MessageId){
     var self = this;
     var MemberData = {};
     var MessageData = {};
-    postJSON('/messages/find',{_id:MessageId,token:Token},function(message){ MessageData = message[0] });
-    postJSON('/members/find',{_id:MessageData.from},function(member){ MemberData = member[0];});
+    console.log(MessageId);
+    if(!(MessageId === undefined || Object.keys(MessageId).length === 0 && MessageId.constructor === Object )){
+      postJSON('/messages/find',{_id:MessageId,token:Token},function(message){ MessageData = message[0] });
+      postJSON('/members/find',{_id:MessageData.from},function(member){ MemberData = member[0];});
+    }
+    else{   postJSON('/members/find',{token:Token},function(member){ MemberData = member[0];});}
 
     self.card = row()
     self.textCol = col(6).removeClass('text-center').addClass('text-left').click(function(){

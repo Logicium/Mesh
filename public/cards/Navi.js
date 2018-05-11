@@ -43,7 +43,7 @@ var UtilitySelectionCard = function(data){
     );
     var self = this;
     this.utilitySelectionCard.click(function(){return self.clicked(this)});
-    this.nameBox = row().append( buttonCol( data.name,12 ).removeClass('cta').addClass('nameBox').prepend($('<i>').addClass('fa fa-'+data.icon)) )
+    this.nameBox = row().append( buttonCol( data.name,12 ).removeClass('cta').addClass('nameBox').prepend(span().append(icon(data.icon)).css('padding-right','15px')) )
     this.assemble();
 };
 

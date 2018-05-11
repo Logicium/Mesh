@@ -42,6 +42,7 @@ router.post('/add',function(request,response){
   console.log("Add convo request: ");
   console.log(request.body);
   var c = (request.body.convo);
+  c.messages = [];
   Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
       c.org = linkedMember.defaultOrg;
       c.creator = linkedMember._id;
