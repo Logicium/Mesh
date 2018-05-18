@@ -103,7 +103,8 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
             var formData = new FormData();
             formData.append('file',inputVal);
             //formData.append('token',JSON.stringify({token:Token}));
-            $.ajax({
+            if(propTitle === 'account'){
+              $.ajax({
                 url:'/settings/upload',
                 type: 'POST',
                 data:formData,
@@ -121,7 +122,45 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
                     $.post('/'+apiRoute+'/update',updateData,function (response) { console.log(response); });
                     parentProp.replaceWith(new PropertyTall(key,inputVal));
                 }
-            });
+            });}
+            else{
+              $.ajax({
+                  url:'/settings/upload',
+                  type: 'POST',
+                  data:formData,
+                  processData: false,
+                  contentType: false,
+                  success:function(data){
+
+                      swal.resetDefaults();
+                      swal({title:JSON.parse(data).message,type:JSON.parse(data).type});
+
+                      var inputVal = 'public/uploads/'+JSON.parse(data).filename;
+                      var configSection = $('body').find('.propType').attr('data-index');
+                      var fullPath = '';
+                      if(pathName){fullPath = (configSection+'.data.'+pathName+'.'+key) }
+                      else{ fullPath = (configSection+'.data.'+key) }
+
+                      _.set(Config,fullPath.split('.'),inputVal);
+                      console.log(Config);
+                      var parentTitle = Config[configSection].name;
+
+                      var requestData = {
+                          parentTitle:parentTitle,
+                          key:key,
+                          newConfig:JSON.stringify(Config),
+                          parentIndex:configSection,
+                          token:Token
+                      };
+                      console.log(requestData);
+                      $.post('/settings/update',requestData,function (response) {
+                          console.log(response);
+                      });
+                      parentProp.replaceWith(new PropertyTall(key,inputVal));
+
+                  }
+              });
+            }
         }
     }
 
