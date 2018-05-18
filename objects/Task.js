@@ -5,12 +5,13 @@ var Members =  require('./../server/Databases').Members;
 var Activities = require('./../server/Databases.js').Activities;
 
 var Task = function(dataModel){
-    this.name = dataModel[0]+'';
-    this.description = dataModel[1]+'';
-    this.assignees = dataModel[2];
-    this.due = dataModel[3]+'';
+    this.name = ( dataModel[0]+'' ? dataModel[0]+'' : 'Task Name' );
+    this.description = ( dataModel[1]+'' ? dataModel[1]+'' : 'Task description' );
+    this.members = dataModel[2].filter(Boolean);
+    this.due = ( dataModel[3]+'' ? dataModel[3]+'' : new Date().setDate(new Date().getDate()+14) );
     this.reoccuring = dataModel[4]+'';
     this.org = '';
+    this.creator = '';
 }
 
 router.get('/',function(request,response){
@@ -36,6 +37,7 @@ router.post('/add',function(request,response){
   var t = new Task(request.body.inputs);
   Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
       t.org = linkedMember.defaultOrg;
+      t.creator = linkedMember._id;
       Tasks.insert(t, function (err, newDoc) {
         console.log(newDoc);
         linkedMember.tasks.push(newDoc._id);

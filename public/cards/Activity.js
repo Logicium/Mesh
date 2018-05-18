@@ -75,7 +75,7 @@ var ProjectActivityCard = function(self,data){
         self.projectNamedImage = div().css(Styles.backgroundImage(newData.icon)).css('background-position','50% 50%').height('150px');
         self.infoRow = row();
         self.membersRow = row().css('padding-top','50px').css('color','white');
-        $.each(['','','','','',''],function(){self.membersRow.append(new MemberIcon('public/images/demo/member.jpg'))});
+        $.each(['','','','','',''],function(){self.membersRow.append(new MemberIcon(2,'public/images/demo/member.jpg'))});
         self.name = col(6).append(highlightText(newData.name).css('font-size','30px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
         self.desc = col(6).append(highlightTextLight(newData.description).css('font-size','18px').css('margin','0 auto')).removeClass('text-center').addClass('text-left').css('padding-top','15px');
         self.card.append( self.projectNamedImage.append(self.infoRow.append(self.name,self.desc), self.membersRow ));

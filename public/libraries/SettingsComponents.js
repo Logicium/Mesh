@@ -27,13 +27,13 @@ var Props = function (key) {
     this.panel = panel().css('padding','10px');
     this.title = div().text(Config[key].name).css('color','white').addClass('propType').attr('data-index',key).css('padding','50px').css('font-size','24px')
         .css('font-family','Open Sans Condensed').css('text-transform','uppercase').css('letter-spacing','10px');
-    this.props = div().css('padding','25px');//$('<pre>').addClass('text-left').text(JSON.stringify(Config[name], null, '\t'));
+    this.props = div().addClass('settingsProps').css('padding','25px').attr('data-objectdata',JSON.stringify(Config[key].data[0]));//$('<pre>').addClass('text-left').text(JSON.stringify(Config[name], null, '\t'));
     var self = this;
     console.log(Config);
     console.log(key);
     console.log(Config[key]);
     var pathName = '';
-    iterate(Config[key].data,0,pathName);
+    iterate( ((Config[key].data instanceof Array && Config[key].data.length==1) ? Config[key].data[0] : Config[key].data ) ,0,pathName);
 
     function iterate(obj,count,pathName) {
         var count = count || 0;
@@ -54,7 +54,7 @@ var Props = function (key) {
                 }
                 else {
                     console.log(property + "   " + obj[property]);
-                    self.props.append(new Property(property,obj[property],count,pathName));
+                    self.props.append(new PropertyTall(property,obj[property],count,pathName));
                     count+=1;
                 }
             }

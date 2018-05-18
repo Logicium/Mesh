@@ -2,7 +2,7 @@ var ModernTools = {}
 
 ModernTools.search = function(toolData){
   this.searchCard = row().css({'position':'absolute','pointer-events':'none','padding-top':'130px','width':'100%'});
-  this.searchInput = col(4).append(div().css({'z-index':'10'}).append(input('Search').css({'pointer-events':'initial','backgroundColor':transparentWhite()}).addClass('inputWhite')));
+  this.searchInput = col(4).addClass('search').append(div().css({'z-index':'10'}).append(input('Search').css({'pointer-events':'initial','backgroundColor':transparentWhite()}).addClass('inputWhite')));
   return this.searchCard.append(col(8),this.searchInput);
 }
 

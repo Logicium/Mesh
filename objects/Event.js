@@ -6,8 +6,8 @@ var Activities = require('./../server/Databases.js').Activities;
 
 var Event = function(dataModel){
     this.name = dataModel[0]+'';
-    this.hosts = dataModel[1];
-    this.guests = dataModel[2];
+    this.hosts = dataModel[1].filter(Boolean);
+    this.guests = dataModel[2].filter(Boolean);
     this.description = dataModel[3]+'';
     this.location = dataModel[4]+'';
     this.startTime = dataModel[5]+'';
@@ -15,7 +15,7 @@ var Event = function(dataModel){
     this.image = dataModel[7]+'';
     this.messages = [];
     this.label = this.name;
-    this.icon = this.image || 'public/images/demo/event.jpg';
+    this.icon = ( (this.image.length!=0) ? this.image : 'public/images/demo/event.jpg' );
     this.org = '';
 };
 

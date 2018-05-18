@@ -1,5 +1,6 @@
-var div = function(){return $('<div>')};
+var div = function(){return $('<div>')}
 var span = function(){return $('<span>')};
+var canvas = function(){return $('<canvas>')};
 var text = function(string,color,size){return div().text(string).css('color',color).css('font-size',size);};
 var highlightText = function(text){return $('<span style=\"background: rgba(0,0,0,0.71);\">&nbsp;'+text+'&nbsp;</span>').css('color','white');};
 var highlightTextLight = function(text){return $('<span style=\"background:'+transparentWhiteHeavy()+'\">&nbsp;'+text+'&nbsp;</span>').css('color','black');};
@@ -82,14 +83,14 @@ var addMessageRow = function(){
     return this.addMessageRow.append(this.addMessageCol,this.sendButtonCol);
 }
 
-var MemberIcon = function(image){
+var MemberIcon = function(size,image){
     var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
-    return col(2).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
+    return col(size).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
 }
 
-var MemberIconMed = function(image){
+var MemberIconMd = function(size,image){
     var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto'}
-    return col(3).append( div().css(Styles.backgroundImage(image)).css(css).height('30px').width('30px') );
+    return col(size).append( div().css(Styles.backgroundImage(image)).css(css).height('45px').width('45px') );
 }
 
 var MemberIconLg = function(image){
@@ -98,7 +99,7 @@ var MemberIconLg = function(image){
 }
 
 var MemberIconWide = function(image){
-    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto', 'margin-top':'10px','margin-bottom':'5px'}
+    var css = {'border':'2px solid white','border-radius':'50%','margin':'0 auto','margin-top':'10px','margin-bottom':'5px'}
     return col(3).append( div().css(Styles.backgroundImage(image)).css(css).height('45px').width('45px') );
 }
 

@@ -6,8 +6,8 @@ var Members =  require('./../server/Databases').Members;
 
 var Message = function(dataModel){
     this.from = dataModel[0]+'';
-    this.members = dataModel[1];
-    this.teams = dataModel[2];
+    this.members = dataModel[1].filter(Boolean);
+    this.teams = dataModel[2].filter(Boolean);
     this.message = dataModel[3]+'';
     this.media = dataModel[4]+'';
     this.org = '';

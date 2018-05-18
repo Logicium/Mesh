@@ -13,7 +13,7 @@ var EventCard = function(newData){
     self.viewFull = div().addClass('animated fadeIn viewFull').css(Styles.click()).css('background-color',transparentBlack()).css({'height':'100%','width':'calc( 100% - 15px )','position':'absolute','z-index':'10'}).append(
         text('View Full','white','24px').css('letter-spacing','6px').css('text-transform', 'uppercase')
             .css('font-family','Open Sans Condensed').css({'padding-top':'75px'})
-    ).click(function(){ $('.activityPanel').replaceWith(new EventPage(newData)); });
+    ).click(function(){ $('.activityPanel').replaceWith(new EventPage(newData));var map = new GMaps({ el: '#map', lat: -12.043333, lng: -77.028333 });});
     this.card.click(function(){
         $('.viewFull').detach();
         self.card.prepend(self.viewFull);

@@ -1,7 +1,8 @@
 var MemberCard = function(newData){
+    console.log(newData);
     var self = this;
     this.card = col(4).addClass('card').css('margin-top','10px');
-    this.content = div().css('min-height','200px').css('margin-right','-15px').css('background-color',transparentWhite());
+    this.content = div().addClass('contentCard').css('min-height','200px').css('margin-right','-15px').css('background-color',transparentWhite());
 
     self.image = div().css(Styles.backgroundImage(newData.icon)).css('border','2px solid white')
     .height('100px').width('100px').css('margin','0 auto').css('border-radius','50%')
@@ -21,6 +22,8 @@ var MemberCard = function(newData){
 
     this.card.click(function(){
         $('.viewFull').detach();
+        $('.contentCard').css('filter','blur(0px)');
+        self.content.css('filter','blur(5px)');
         self.card.prepend(self.viewFull);
         $('.eastNavi').replaceWith(new PrivateDetailCard(newData));
     });

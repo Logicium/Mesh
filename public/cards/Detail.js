@@ -1,4 +1,3 @@
-//Add top picture,
 //View Full Page Button
 //Title Over Top picture
 
@@ -44,9 +43,10 @@ var PrivateDetailCard = function(json){
 var DetailCard = function(json){
     console.log(json);
     var self = this;
-    this.card = col(2).addClass('animated fadeInRight eastNavi').css('height','100vh').css('padding','0').css('background-color',transparentWhite());
+    var cardCss = {'padding':'0','height':'!important 0px','pointer-events':'none'};
+    this.card = span().addClass('eastNavi settingsProps').css(cardCss);
     this.card.attr('data-objectdata',JSON.stringify(json));
-    this.props = div().css('padding','15px').height('100vh').css('overflow-y','scroll');
+    this.props = div().addClass('animated fadeInRight').css({'background-color':transparentWhite(),'padding':'15px','pointer-events':'initial'}).height('100vh').css('overflow-y','scroll');
     var pathName = '';
     iterate(json,0,pathName);
     function iterate(obj,count,pathName) {
@@ -74,7 +74,7 @@ var DetailCard = function(json){
             }
         }
     }
-    this.card.resizable();
+    //this.card.resizable();
     this.image = div().css(Styles.backgroundImage(json.icon)).css({'width':'100%','height':'300px'});
     this.title = titleSm(json.fullName || json.name).css('font-weight','500').css('color','white');
     if(json.icon){ return this.card.append(this.props.prepend(this.image,this.title)); }

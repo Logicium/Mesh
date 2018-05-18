@@ -10,8 +10,8 @@ var PrivateProperty = function(key,value,idNumber,pathName){
 var PropertyTall = function(key,value,idNumber,pathName){
 
     this.prop = row().addClass('.propertyRow').attr('id',idNumber).attr('data-path',pathName);
-    this.key = div().css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).removeClass('text-center').addClass('text-left');
-    this.value = div().css('margin-top','15px').append(text(value,'black','18px')).removeClass('text-center').addClass('text-left');
+    this.key = col(6).css('margin-top','40px').append(text(key,'white','18px').css('font-weight','500')).removeClass('text-center').addClass('text-left');
+    this.value = col(6).css('margin-top','40px').append(text(value,'black','16px')).removeClass('text-center').addClass('text-left');
 
     this.edit = div().width('100%').append(button('Edit').css('color','white').addClass('text-center').css('margin-top','15px').click(function () {
         console.log($('body').find(this).parent().parent());
@@ -75,19 +75,22 @@ var SimpleProtoForm = function (key,configSection,path,prototype) {
 
 var EditPropertyTall = function(key,value,idNumber,pathName){
     this.prop = row().attr('id',idNumber).attr('data-path',pathName);
-    this.key = div().css('margin-top','40px').append(highlightText(key+' :&nbsp;').css('font-size','20px').css('color','white')).addClass('text-left').width('100%');
+    this.key = div().css('margin-top','40px').append(highlightTextLight(key+' :&nbsp;').css('font-size','20px')).addClass('text-left').width('100%');
     var inputType = $('<input>').addClass('button ghost').attr('value',value).css('font-size','18px').css('margin','0');
+    var panelTitle = $('.northNavi').text().replace(/ /g,'').toLowerCase();
+    var propTitle = $('.propType').text().toLowerCase();
+    var apiRoute = (propTitle === 'account' ? 'members' : panelTitle);
     var saveClick = function () {
-        var SaveData = JSON.parse($('.eastNavi').attr('data-objectdata'));
-        var panelTitle = $('.northNavi').text().replace(/ /g,'').toLowerCase();
+        var SaveData = JSON.parse($('.settingsProps').attr('data-objectdata'));
         var thisButton = $('body').find(this);
         var parentProp = thisButton.parent().parent();
         var inputVal = parentProp.find('input').val();
         var pathName = parentProp.attr('data-path').substring(1);
         var fullPath = ( pathName ? (pathName+'.'+key) : (key) );
+        console.log(fullPath);
         _.set(SaveData,fullPath.split('.'),inputVal);
         var data = { objectData:SaveData, token:Token };
-        $.post('/'+panelTitle+'/update',data,function (response) { console.log(response); });
+        $.post('/'+apiRoute+'/update',data,function (response) { console.log(response); });
         parentProp.replaceWith(new PropertyTall(key,inputVal));
     };
 
@@ -109,14 +112,13 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
                 success:function(data){
                     swal.resetDefaults();
                     swal({title:JSON.parse(data).message,type:JSON.parse(data).type});
-                    var SaveData = JSON.parse($('.eastNavi').attr('data-objectdata'));
-                    var panelTitle = $('.northNavi').text().replace(/ /g,'').toLowerCase();
+                    var SaveData = JSON.parse($('.settingsProps').attr('data-objectdata'));
                     var inputVal = 'public/uploads/'+JSON.parse(data).filename;
                     var pathName = parentProp.attr('data-path').substring(1);
                     var fullPath = ( pathName ? (pathName+'.'+key) : (key) );
                     _.set(SaveData,fullPath.split('.'),inputVal);
                     var updateData = { objectData:SaveData, token:Token};
-                    $.post('/'+panelTitle+'/update',updateData,function (response) { console.log(response); });
+                    $.post('/'+apiRoute+'/update',updateData,function (response) { console.log(response); });
                     parentProp.replaceWith(new PropertyTall(key,inputVal));
                 }
             });
@@ -127,7 +129,7 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
         inputType = input(value).focusin(function () {$(this).attr('type','date')}).focusout(function () {$(this).attr('type','text')});
     }
 
-    this.value = col(7).css('margin-top','40px').removeClass('text-center').addClass('text-left').append(
+    this.value = col(7).css({'margin-top':'10px','margin-bottom':'10px','padding':'0'}).removeClass('text-center').addClass('text-left').append(
         inputType
     );
 
@@ -139,5 +141,5 @@ var EditPropertyTall = function(key,value,idNumber,pathName){
 }
 
 var isDate = function(date) {
-    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
+    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date) && Date.parse(date) && date.matches("[0-9]+"));
 };

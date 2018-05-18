@@ -11,20 +11,20 @@ var Organization = function(dataModel){
     this.image = dataModel[2]+'';
     this.members = [];
     this.label = this.name;
-    this.icon = this.image || 'public/images/demo/team.jpg';
+    this.icon = ( (this.image.length!=0) ? this.image : 'public/images/demo/org.jpg' );
     this.creator = '';
 }
 
 router.get('/',function(request,response){
   //List all from Database
-  console.log("Download all Teams request.");
+  console.log("Download all Orgs request.");
   Teams.find({}, function (err, docs) {
     response.send(docs);
   });
 });
 
 router.post('/list',function(request,response){
-    console.log("Download all org Teams request.");
+    console.log("Download all org Orgs request.");
     Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
         Teams.find({org:linkedMember.defaultOrg},function(err,orgTeams){
             response.send(orgTeams);

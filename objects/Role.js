@@ -6,14 +6,14 @@ var Activities = require('./../server/Databases.js').Activities;
 
 var Role = function(dataModel){
     this.name = dataModel[0]+'';
-    this.hashtags = dataModel[1];
-    this.description = dataModel[2];
-    this.image = dataModel[3];
-    this.members = [dataModel[4]]
+    this.hashtags = dataModel[1]+'';
+    this.description = dataModel[2]+'';
+    this.image = dataModel[3].filter(Boolean);
+    this.members = [dataModel[4].filter(Boolean)]
     this.messages = [];
     this.resources = [];
     this.label = this.name.toLowerCase();
-    this.icon = this.image  || 'public/images/demo/role.jpg';
+    this.icon = ( (this.image.length!=0) ? this.image : 'public/images/demo/role.jpg' );
     this.org = '';
 };
 

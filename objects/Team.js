@@ -8,10 +8,10 @@ var Team = function(dataModel){
     this.name = dataModel[0]+'';
     this.description = dataModel[1]+'';
     this.image = dataModel[2]+'';
-    this.members = dataModel[3];
-    this.projects = dataModel[4]
+    this.members = dataModel[3].filter(Boolean);
+    this.projects = dataModel[4].filter(Boolean);
     this.label = this.name;
-    this.icon = this.image || 'public/images/demo/team.jpg';
+    this.icon = ( (this.image.length!=0) ? this.image : 'public/images/demo/team.jpg' );
     this.org = '';
 }
 

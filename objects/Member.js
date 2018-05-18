@@ -13,9 +13,9 @@ var Member = function(DataModel){
     this.email = DataModel[2]+'';
     this.password = DataModel[3]+'';
     this.image = DataModel[4]+'';
-    this.roles = DataModel[5];
-    this.teams = DataModel[6];
-    this.projects = DataModel[7];
+    this.roles = DataModel[5].filter(Boolean);
+    this.teams = DataModel[6].filter(Boolean);
+    this.projects = DataModel[7].filter(Boolean);
     this.activity = [];
     this.messages = [];
     this.events = [];
@@ -23,7 +23,7 @@ var Member = function(DataModel){
     this.orgs = [];
     this.defaultOrg = '';
     this.label = this.fullName;
-    this.icon = this.image;
+    this.icon =  ( (this.image.length!=0) ? this.image : 'public/images/demo/member.jpg' );
 };
 
 router.get('/',function(request,response){
@@ -105,7 +105,7 @@ router.post('/activities',function(request,response){
 
 router.post('/update',function(request,response){
     console.log(request.body);
-    var updateObject = request.body.updateObject;
+    var updateObject = request.body.updateObject || request.body.objectData;
     var updateId = updateObject._id;
     Members.findOne({loginToken:request.body.token}, function (err, linkedMember) {
         Members.update({_id:updateId},updateObject,{},function(err,doc){

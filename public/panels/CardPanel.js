@@ -1,5 +1,5 @@
 var CardPanel = function(name){
-  this.cardPanel = div().addClass('cardPanel col-xs-8 text-center animated fadeInUp').css('padding','0').css('margin-left','-15px').css('margin-top','15px');
+  this.cardPanel = div().addClass('cardPanel col-xs-8 text-center').css('padding','0').css('margin-left','-15px').css('margin-top','15px');
   this.cardPanel.css('height','100%').css('width','calc(100% + 15px)');
   this.cards = div().addClass('cards text-center');
   this.cardPanel.append(this.cards);
@@ -12,7 +12,9 @@ CardPanel.prototype = {
     postJSON('/'+self.name+'/list',{token:Token},function(data){
         console.log(data)
       $.each(data,function(){
-        self.cards.append(new Card(this,self.name));
+        var c = new Card(this,self.name);
+        c.addClass('animated fadeIn');
+        self.cards.append(c);
       });
     });
     return $(this.cardPanel);
@@ -34,5 +36,6 @@ var Card = function(data,type){
     this.card.css('background','rgba(246, 246, 246, 0.31)').css('margin-left','5px').css('margin-right','-15px').css('margin-top','10px');
     this.card.append(div().append(JSON.stringify(data, null, 4)));
   }
+  this.card.attr('data-info',JSON.stringify(data));
   return this.card;
 };
