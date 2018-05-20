@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A organization building app that puts all the tools you need to automate your organization, assign responsibility, and cross communicate.",
   "main": "Orga.js",
+  "engines": {"node": "^8.11.1"},
   "dependencies": {
     "body-parser": "^1.16.1",
     "directory-structure-json": "^1.0.0",
